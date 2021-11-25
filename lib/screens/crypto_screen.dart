@@ -1,10 +1,10 @@
+
 import 'dart:async';
 import 'dart:convert';
 import 'package:crypto_tracker/screens/screens.dart';
 import 'package:crypto_tracker/models/data_model.dart';
 import 'package:crypto_tracker/models/coin_model.dart';
 import 'package:flutter/material.dart';
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:http/http.dart' as http;
 
 
