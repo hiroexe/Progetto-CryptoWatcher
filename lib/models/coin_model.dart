@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CoinModel extends StatelessWidget {
-  CoinModel({
+class CoinCard extends StatelessWidget {
+  CoinCard({
     required this.name,
     required this.symbol,
     required this.imageUrl,

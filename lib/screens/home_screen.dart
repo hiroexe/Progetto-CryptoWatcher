@@ -11,21 +11,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
+
   int _selectedIndex = 0;
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
-
   static const List<Widget> _screenList = [
-    //CryptoScreen(),
-    //WishlistScreen(),
-    //PortfolioScreen(),
+    CryptoScreen(),
+    WishlistScreen(),
+    PortfolioScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(3, 6, 29, 1.0),
@@ -46,7 +47,6 @@ class HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.trending_up),
             label: 'Crypto',
-
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.star),
@@ -60,7 +60,7 @@ class HomeScreenState extends State<HomeScreen> {
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
-      ),
+     ),
     );
   }
 }
