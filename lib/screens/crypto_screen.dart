@@ -1,7 +1,6 @@
 
 import 'dart:async';
 import 'dart:convert';
-import 'package:crypto_tracker/screens/screens.dart';
 import 'package:crypto_tracker/models/data_model.dart';
 import 'package:crypto_tracker/models/coin_model.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,9 @@ class CryptoScreen extends StatefulWidget {
   _CryptoScreenState createState() => _CryptoScreenState();
 }
 
-class _CryptoScreenState extends State <HomeScreen> {
+class _CryptoScreenState extends State <CryptoScreen> {
+
+
   Future<List<CryptoModel>> fetchCoin() async {
     coinList = [];
     final response = await https.get(Uri.parse(
@@ -31,6 +32,25 @@ class _CryptoScreenState extends State <HomeScreen> {
             Map<String, dynamic> map = values[i];
             coinList.add(CryptoModel.fromJson(map));
           }
+          /*
+          if (values[i] == null) {
+            return values[i];
+          } else {
+            Map<String, dynamic> map = values[i];
+            coinList.add(CryptoModel.fromJson(map));
+          }
+
+          else if (values[i] is String){
+            values[i] = "DEBUG";
+            Map<String, dynamic> map = values[i];
+            coinList.add(CryptoModel.fromJson(map));
+          } else if (values[i] is int){
+            values[i] = 2021;
+            Map<String, dynamic> map = values[i];
+            coinList.add(CryptoModel.fromJson(map));
+          }
+
+           */
         }
         setState(() {
           coinList;
@@ -41,14 +61,12 @@ class _CryptoScreenState extends State <HomeScreen> {
       throw Exception('Failed to load coins');
     }
   }
-
   @override
   void initState() {
     fetchCoin();
-    Timer.periodic(const Duration(seconds: 10), (timer) => fetchCoin());
+    Timer.periodic(const Duration(seconds: 60), (timer) => fetchCoin());
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,10 +77,10 @@ class _CryptoScreenState extends State <HomeScreen> {
             return CoinCard(
               name: coinList[index].name,
               symbol: coinList[index].symbol,
-              imageUrl: coinList[index].imageUrl,
-              price: coinList[index].price.toDouble(),
-              change: coinList[index].change.toDouble(),
-              changePercentage: coinList[index].changePercentage.toDouble(),
+              image: coinList[index].image,
+              currentPrice: coinList[index].currentPrice.toDouble(),
+              priceChange_24h: coinList[index].priceChange_24h.toDouble(),
+              priceChangePercentage_24h: coinList[index].priceChangePercentage_24h.toDouble(),
             );
           },
         ));

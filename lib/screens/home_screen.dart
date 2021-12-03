@@ -20,7 +20,7 @@ class HomeScreenState extends State<HomeScreen> {
   }
   static const List<Widget> _screenList = [
     CryptoScreen(),
-    WishlistScreen(),
+    WatchlistScreen(),
     PortfolioScreen(),
   ];
 
@@ -29,19 +29,21 @@ class HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(3, 6, 29, 1.0),
-        title: const Text(
-          'CRYPTOWATCHER',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.white70,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+        backgroundColor: Colors.grey[800],
+        title: const Center(
+          child: Text(
+            'CRYPTOWATCHER',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),
       body: _screenList[_selectedIndex],
-      backgroundColor: const Color.fromRGBO(3, 6, 29, 1.0),
+      backgroundColor: Colors.grey,
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -50,7 +52,7 @@ class HomeScreenState extends State<HomeScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.star),
-            label: 'Wishlist',
+            label: 'Watchlist',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.pie_chart),

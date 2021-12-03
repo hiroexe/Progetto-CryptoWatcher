@@ -1,5 +1,78 @@
+class CryptoModel {
+  CryptoModel({
+    required this.symbol,
+    required this.name,
+    required this.image,
+    required this.currentPrice,
+    required this.priceChange_24h,
+    required this.priceChangePercentage_24h,
+  });
+  late final String symbol;
+  late final String name;
+  late final String image;
+  late final num currentPrice;
+  late final num priceChange_24h;
+  late final num priceChangePercentage_24h;
+
+  CryptoModel.fromJson(Map<String, dynamic> json){
+    symbol = json['symbol'];
+    name = json['name'];
+    image = json['image'];
+    currentPrice = json['current_price'];
+    priceChange_24h = json['price_change_24h'];
+    priceChangePercentage_24h = json['price_change_percentage_24h'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['symbol'] = symbol;
+    _data['name'] = name;
+    _data['image'] = image;
+    _data['current_price'] = currentPrice;
+    _data['price_change_24h'] = priceChange_24h;
+    _data['price_change_percentage_24h'] = priceChangePercentage_24h;
+    return _data;
+  }
+}
+List<CryptoModel> coinList = [];
+
 
 /*
+class CryptoModel {
+  String name;
+  String symbol;
+  String imageUrl;
+  num price;
+  num change;
+  num changePercentage;
+
+  CryptoModel({
+    required this.name,
+    required this.symbol,
+    required this.imageUrl,
+    required this.price,
+    required this.change,
+    required this.changePercentage,
+});
+
+
+  factory CryptoModel.fromJson(Map<String,dynamic> json){
+    return CryptoModel(
+        name: json['name'],
+        symbol: json['symbol'] ,
+        imageUrl: json['imageUrl'],
+        price: json['price'] ,
+        change: json['change'],
+        changePercentage: json['changePercentage']
+    );
+  }
+}
+
+List<CryptoModel> coinList = [];
+
+
+
+
 {
     "id": "bitcoin",
     "symbol": "btc",
@@ -27,7 +100,7 @@
     "atl_date": "2013-07-06T00:00:00.000Z",
     "roi": null,
     "last_updated": "2021-11-24T20:26:26.644Z"
-
+}
      factory CryptoModel.fromJson(Map<String , dynamic> json) {
     return CryptoModel(
 
@@ -35,37 +108,3 @@
   }
   },
  */
-class CryptoModel {
-  String name;
-  String symbol;
-  String imageUrl;
-  num price;
-  num change;
-  num changePercentage;
-
-  CryptoModel({
-    required this.name,
-    required this.symbol,
-    required this.imageUrl,
-    required this.price,
-    required this.change,
-    required this.changePercentage,
-});
-
-  factory CryptoModel.fromJson(Map<String,dynamic> json){
-    return CryptoModel(
-        name: json['name'],
-        symbol: json['symbol'] ,
-        imageUrl: json['imageUrl'] ,
-        price: json['price'] ,
-        change: json['change'],
-        changePercentage: json['changePercentage']
-    );
-  }
-}
-
-List <CryptoModel> coinList = [];
-
-
-
-
