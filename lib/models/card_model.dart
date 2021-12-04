@@ -23,27 +23,14 @@ class CoinCard extends StatelessWidget {
       padding: const EdgeInsets.only(top: 15, left: 10, right: 10),
       child: Container(
         height: 100,
-        /*
+
         decoration: BoxDecoration(
-          color: Color.fromRGBO(3, 8, 28, 1.0),
+          color: Colors.grey,
           borderRadius: BorderRadius.circular(20),
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.grey,
-              offset: Offset(4, 4),
-              blurRadius: 1,
-              spreadRadius: 1,
-            ),
-            BoxShadow(
-              color: Colors.white,
-              offset: Offset(-4, -4),
-              blurRadius: 1,
-              spreadRadius: 1,
-            ),
-          ],
+
         ),
 
-         */
+
         child: Row(
           children: [
             Padding(
@@ -68,7 +55,9 @@ class CoinCard extends StatelessWidget {
                     ),
                   ],
 
+
                    */
+
                 ),
                 height: 60,
                 width: 60,

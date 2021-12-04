@@ -1,8 +1,9 @@
 
 import 'dart:async';
 import 'dart:convert';
-import 'package:crypto_tracker/models/data_model.dart';
-import 'package:crypto_tracker/models/coin_model.dart';
+import 'package:crypto_tracker/models/crypto_model.dart';
+import 'package:crypto_tracker/models/card_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
 
@@ -62,9 +63,12 @@ class _CryptoScreenState extends State <CryptoScreen> {
     }
   }
   @override
+  //https://stackoverflow.com/questions/68817813/flutter-error-setstate-called-after-dispose
   void initState() {
     fetchCoin();
-    Timer.periodic(const Duration(seconds: 60), (timer) => fetchCoin());
+    if(mounted) {
+      Timer.periodic(const Duration(seconds: 60), (timer) => fetchCoin());
+    }
     super.initState();
   }
   @override
