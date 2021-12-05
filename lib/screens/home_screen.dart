@@ -52,7 +52,7 @@ class HomeScreenState extends State<HomeScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.star),
-            label: 'Watchlist',
+            label : ('Watchlist'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.pie_chart),

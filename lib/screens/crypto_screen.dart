@@ -33,26 +33,9 @@ class _CryptoScreenState extends State <CryptoScreen> {
             Map<String, dynamic> map = values[i];
             coinList.add(CryptoModel.fromJson(map));
           }
-          /*
-          if (values[i] == null) {
-            return values[i];
-          } else {
-            Map<String, dynamic> map = values[i];
-            coinList.add(CryptoModel.fromJson(map));
-          }
 
-          else if (values[i] is String){
-            values[i] = "DEBUG";
-            Map<String, dynamic> map = values[i];
-            coinList.add(CryptoModel.fromJson(map));
-          } else if (values[i] is int){
-            values[i] = 2021;
-            Map<String, dynamic> map = values[i];
-            coinList.add(CryptoModel.fromJson(map));
-          }
-
-           */
         }
+
         setState(() {
           coinList;
         });
