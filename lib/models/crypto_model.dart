@@ -6,6 +6,11 @@ class CryptoModel {
     required this.currentPrice,
     required this.priceChange_24h,
     required this.priceChangePercentage_24h,
+    required this.totalVolume,
+    required this.marketCap,
+    required this.marketCapRank,
+    required this.circulatingSupply,
+
   });
   late final String symbol;
   late final String name;
@@ -13,6 +18,12 @@ class CryptoModel {
   late final num currentPrice;
   late final num priceChange_24h;
   late final num priceChangePercentage_24h;
+  late final num totalVolume;
+  late final num marketCap;
+  late final num marketCapRank;
+  late final num circulatingSupply;
+
+
 
   CryptoModel.fromJson(Map<String, dynamic> json){
     symbol = json['symbol'];
@@ -21,6 +32,10 @@ class CryptoModel {
     currentPrice = json['current_price'];
     priceChange_24h = json['price_change_24h'];
     priceChangePercentage_24h = json['price_change_percentage_24h'];
+    totalVolume = json['total_volume'];
+    marketCap = json['market_cap'];
+    marketCapRank = json['market_cap_rank'];
+    circulatingSupply = json['circulating_supply'];
   }
 
   Map<String, dynamic> toJson() {
@@ -31,6 +46,10 @@ class CryptoModel {
     _data['current_price'] = currentPrice;
     _data['price_change_24h'] = priceChange_24h;
     _data['price_change_percentage_24h'] = priceChangePercentage_24h;
+    _data['total_volume'] = totalVolume;
+    _data['market_cap'] = marketCap;
+    _data['market_cap_rank'] = marketCapRank;
+    _data['circulating_supply'] = circulatingSupply;
     return _data;
   }
 }

@@ -65,6 +65,10 @@ class _CryptoScreenState extends State <CryptoScreen> {
               currentPrice: coinList[index].currentPrice.toDouble(),
               priceChange_24h: coinList[index].priceChange_24h.toDouble(),
               priceChangePercentage_24h: coinList[index].priceChangePercentage_24h.toDouble(),
+              totalVolume: coinList[index].totalVolume.toDouble(),
+              marketCap: coinList[index].marketCap.toDouble(),
+              marketCapRank: coinList[index].marketCapRank.toDouble(),
+              circulatingSupply: coinList[index].circulatingSupply.toDouble(),
             );
           },
         ));
