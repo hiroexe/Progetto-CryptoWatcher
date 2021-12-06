@@ -1,8 +1,8 @@
 
-import 'package:crypto_tracker/models/crypto_model.dart';
+import 'package:crypto_tracker/screens/portfolio_screen_add_crypto.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:crypto_tracker/screens/portfolio_screen_add_crypto.dart';
 
 class PortfolioScreen extends StatefulWidget {
   const PortfolioScreen({Key? key}) : super(key: key);
@@ -56,14 +56,15 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
               ],
             ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: const FloatingActionButton.extended(
-        onPressed: getChartData,
+      floatingActionButton:FloatingActionButton.extended(
         backgroundColor: Colors.amber,
         label: Text("ADD"),
         icon: Icon(Icons.add),
+        onPressed: getChartData,
+      ),
 
-      )
-    );
+      );
+
     }
 }
 

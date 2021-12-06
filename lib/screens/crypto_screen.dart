@@ -23,7 +23,6 @@ class _CryptoScreenState extends State <CryptoScreen> {
     coinList = [];
     final response = await https.get(Uri.parse(
         'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false'));
-
     if (response.statusCode == 200) {
       List<dynamic> values = [];
       values = json.decode(response.body);
@@ -33,9 +32,7 @@ class _CryptoScreenState extends State <CryptoScreen> {
             Map<String, dynamic> map = values[i];
             coinList.add(CryptoModel.fromJson(map));
           }
-
         }
-
         setState(() {
           coinList;
         });

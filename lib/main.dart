@@ -1,5 +1,5 @@
 //https://github.com/hiroexe/Progetto-CryptoWatcher.git
-//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
 import 'package:crypto_tracker/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 void main() => runApp(const MyApp());

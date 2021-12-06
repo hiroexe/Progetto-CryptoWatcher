@@ -23,8 +23,6 @@ class CryptoModel {
     priceChangePercentage_24h = json['price_change_percentage_24h'];
   }
 
-
-
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['symbol'] = symbol;
