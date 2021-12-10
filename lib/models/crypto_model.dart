@@ -1,5 +1,6 @@
 class CryptoModel {
   CryptoModel({
+    required this.id,
     required this.symbol,
     required this.name,
     required this.image,
@@ -12,6 +13,7 @@ class CryptoModel {
     required this.circulatingSupply,
 
   });
+  late final String id;
   late final String symbol;
   late final String name;
   late final String image;
@@ -26,6 +28,7 @@ class CryptoModel {
 
 
   CryptoModel.fromJson(Map<String, dynamic> json){
+    id = json['id'];
     symbol = json['symbol'];
     name = json['name'];
     image = json['image'];
@@ -40,6 +43,7 @@ class CryptoModel {
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
+    _data['id'] = id;
     _data['symbol'] = symbol;
     _data['name'] = name;
     _data['image'] = image;

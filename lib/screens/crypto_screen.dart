@@ -60,6 +60,7 @@ class _CryptoScreenState extends State <CryptoScreen> {
           itemCount: coinList.length,
           itemBuilder: (context, index) {
             return CoinCard(
+              id: coinList[index].id,
               name: coinList[index].name,
               symbol: coinList[index].symbol,
               image: coinList[index].image,
