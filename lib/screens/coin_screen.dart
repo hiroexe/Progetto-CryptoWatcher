@@ -109,35 +109,285 @@ class CoinScreenState extends State<CoinScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          toolbarHeight: 120,
-          title: Text (name
+          title: Row (
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Text('|  ',),
+                Text(this.symbol.toUpperCase()),
+                Text('/USD')
+              ]
+
+
+
 
           ),
         ),
-        body: Scaffold (
-           body: SfCartesianChart(
-               series: <CandleSeries>[
-                CandleSeries<ChartSampleData, DateTime> (
-                    dataSource: data,
-                    xValueMapper: (ChartSampleData sales, _) => sales.x,
-                    lowValueMapper: (ChartSampleData sales, _) => sales.low,
-                    highValueMapper: (ChartSampleData sales, _) => sales.high,
-                    openValueMapper: (ChartSampleData sales, _) => sales.open,
-                    closeValueMapper: (ChartSampleData sales, _) => sales.close),
-                ],
-                primaryXAxis: DateTimeAxis(
-                  dateFormat: DateFormat.MMMd(),
-                  majorGridLines: MajorGridLines(width: 0)
+        body: ListView  (
+          scrollDirection: Axis.vertical,
+          children: <Widget>[
+
+          Container(
+          height: 100,
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                primaryYAxis: NumericAxis(
-                    minimum: this.currentPrice / 1.1,
-                    maximum: this.currentPrice * 1.1,
-                    interval: this.currentPrice / 6,
-                    numberFormat: NumberFormat.simpleCurrency(decimalDigits: 0)),
+                  height: 60,
+                  width: 60,
+                  child: Padding(
+                    padding: const EdgeInsets.all(0),
+                    child: Image.network(image),
+                  ),
                 ),
+              ),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        name,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      symbol.toUpperCase(),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      currentPrice.toDouble().toStringAsFixed(4),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      priceChange_24h.toDouble() < 0
+                          ? priceChange_24h.toDouble().toStringAsFixed(2)
+                          : '+' +
+                          priceChange_24h.toDouble().toStringAsFixed(2),
+                      style: TextStyle(
+                        color: priceChange_24h.toDouble() < 0
+                            ? Colors.red
+                            : Colors.green,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      priceChangePercentage_24h.toDouble() < 0
+                          ? priceChangePercentage_24h.toDouble()
+                          .toStringAsFixed(2) + '%'
+                          : '+' + priceChangePercentage_24h.toDouble()
+                          .toStringAsFixed(2) + '%',
+                      style: TextStyle(
+                        color: priceChangePercentage_24h.toDouble() < 0
+                            ? Colors.red
+                            : Colors.green,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+
+
+
+
+
+
+
+
+           Container(
+             child: SfCartesianChart(
+                 series: <CandleSeries>[
+                  CandleSeries<ChartSampleData, DateTime> (
+                      enableSolidCandles: true,
+                      dataSource: data,
+                      xValueMapper: (ChartSampleData sales, _) => sales.x,
+                      lowValueMapper: (ChartSampleData sales, _) => sales.low,
+                      highValueMapper: (ChartSampleData sales, _) => sales.high,
+                      openValueMapper: (ChartSampleData sales, _) => sales.open,
+                      closeValueMapper: (ChartSampleData sales, _) => sales.close),
+                  ],
+                  primaryXAxis: DateTimeAxis(
+                    dateFormat: DateFormat.MMMd(),
+                    majorGridLines: MajorGridLines(width: 0),
+                    ),
+                  primaryYAxis: NumericAxis(
+                      majorGridLines: MajorGridLines(width: 1),
+                      minimum: this.currentPrice / 1.1,
+                      maximum: this.currentPrice * 1.1,
+                      interval: this.currentPrice / 13,
+                      numberFormat: NumberFormat.simpleCurrency(decimalDigits: 2)),
+                  ),
            ),
+
+
+         SizedBox(
+           height:60,
+           child: BottomNavigationBar(
+             items: const <BottomNavigationBarItem>[
+               BottomNavigationBarItem(
+                 icon: Icon(Icons.trending_up),
+                 label: '1d',
+               ),
+               BottomNavigationBarItem(
+                 icon: Icon(Icons.star),
+                 label : ('1m'),
+               ),
+               BottomNavigationBarItem(
+                 icon: Icon(Icons.pie_chart),
+                 label: '1y',
+               ),
+             ],
+             selectedItemColor: Colors.amber[800],
+
+           )
+
+         ),
+
+
+
+
+
+
+        SizedBox(
+          height:100,
+          width: 100,
+            child: FittedBox(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  child: Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                            Text(' '),
+                            Text('Total Volume:',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),),
+                            Text('Circulating Supply:',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),),
+                            Text('MarketCap:',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),),
+                            Text('MarketCap Rank:',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),),
+
+
+
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(' '),
+                          Text(this.totalVolume.toString(),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.normal,
+                            ),),
+                          Text(this.circulatingSupply.toString(),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.normal,
+                            ),),
+                          Text(this.marketCap.toString(),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.normal,
+                            ),),
+                          Text(this.circulatingSupply.toString(),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.normal,
+                            ),),
+
+
+
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
+       /*   child: ListView(
+
+                  children: <Widget>[
+                    Container(
+                      height: 5,
+                      color: Colors.amber[600],
+                      child: const Center(child: Text('Entry A')),
+                    ),
+                    Container(
+                      height: 5,
+                      color: Colors.amber[500],
+                      child: const Center(child: Text('Entry B')),
+                    ),
+                    Container(
+                      height: 5,
+                      color: Colors.amber[100],
+                      child: const Center(child: Text('Entry C')),
+                    ),
+                  ],
+                ), */
+        ),
+      ],
+        ),
+
         );
 
 
   }
 }
+
