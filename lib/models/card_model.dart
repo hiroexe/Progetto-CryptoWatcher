@@ -5,6 +5,7 @@ import 'package:crypto_tracker/screens/screens.dart';
 
 class CoinCard extends StatelessWidget {
   CoinCard({
+    required this.id,
     required this.symbol,
     required this.name,
     required this.image,
@@ -17,6 +18,7 @@ class CoinCard extends StatelessWidget {
     required this.circulatingSupply,
   });
 
+  late final String id;
   late final String symbol;
   late final String name;
   late final String image;
@@ -152,7 +154,17 @@ class CoinCard extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) => CoinScreen(
-                      name: name, marketCapRank: marketCapRank.toDouble(),
+                      id: id,
+                      symbol: symbol,
+                      name: name,
+                      image: image,
+                      currentPrice: currentPrice.toDouble(),
+                      priceChange_24h: priceChange_24h.toDouble(),
+                      priceChangePercentage_24h: priceChangePercentage_24h.toDouble(),
+                      totalVolume: totalVolume.toDouble(),
+                      marketCap: marketCap.toDouble(),
+                      marketCapRank: marketCapRank.toDouble(),
+                      circulatingSupply: circulatingSupply.toDouble(),
 
                     )));
           },
