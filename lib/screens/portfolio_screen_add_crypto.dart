@@ -16,14 +16,15 @@ class _AddCryptoToChartState extends State<AddCryptoToChart> {
       appBar: AppBar(
         title: const Text("Add your Crypto"),
       ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('Add'),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton:FloatingActionButton.extended(
+        backgroundColor: Colors.amber,
+        label: const Text("ADD"),
+        icon: const Icon(Icons.add),
+        onPressed: () {
+          Navigator.pop(context);
+        },
         ),
-      ),
-    );
+      );
   }
 }

@@ -1,5 +1,4 @@
 
-import 'package:crypto_tracker/screens/portfolio_screen_add_crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:crypto_tracker/screens/portfolio_screen_add_crypto.dart';
@@ -40,27 +39,34 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            body: SfCircularChart(
-                title: ChartTitle(text: 'Crypto portfolio \n (in USD)'),
-                legend: Legend(
-                isVisible: true, overflowMode: LegendItemOverflowMode.wrap),
-                tooltipBehavior: _tooltipBehavior,
-                series: <CircularSeries>[
-                DoughnutSeries<CryptoData, String>(
-                  dataSource: _chartData,
-                  xValueMapper: (CryptoData data, _) => data.name,
-                  yValueMapper: (CryptoData data, _) => data.price,
-                  dataLabelSettings: const DataLabelSettings(isVisible: true),
-                  enableTooltip: true,
-                )
-              ],
+            body: Center(
+              child: SfCircularChart(
+                  title: ChartTitle(text: 'Crypto portfolio \n (in USD)'),
+                  legend: Legend(
+                  isVisible: true, overflowMode: LegendItemOverflowMode.wrap),
+                  tooltipBehavior: _tooltipBehavior,
+                  series: <CircularSeries>[
+                  DoughnutSeries<CryptoData, String>(
+                    dataSource: _chartData,
+                    xValueMapper: (CryptoData data, _) => data.name,
+                    yValueMapper: (CryptoData data, _) => data.price,
+                    dataLabelSettings: const DataLabelSettings(isVisible: true),
+                    enableTooltip: true,
+                  )
+                ],
+              ),
             ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton:FloatingActionButton.extended(
-        backgroundColor: Colors.amber,
-        label: Text("ADD"),
-        icon: Icon(Icons.add),
-        onPressed: getChartData,
+          backgroundColor: Colors.amber,
+        label: const Text("ADD"),
+        icon: const Icon(Icons.add),
+        onPressed: () {
+         Navigator.push(
+           context,
+           MaterialPageRoute(builder: (context) => const AddCryptoToChart())
+         );
+        },
       ),
 
       );

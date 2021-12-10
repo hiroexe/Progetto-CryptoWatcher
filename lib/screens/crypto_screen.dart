@@ -48,9 +48,10 @@ class _CryptoScreenState extends State <CryptoScreen> {
     fetchCoin();
     if(mounted) {
       Timer.periodic(const Duration(seconds: 60), (timer) => fetchCoin());
+      super.initState();
     }
-    super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
