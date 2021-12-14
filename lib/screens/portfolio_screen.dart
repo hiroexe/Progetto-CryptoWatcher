@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:crypto_tracker/screens/portfolio_screen_add_crypto.dart';
+import 'package:crypto_tracker/provider/portfolio_provider.dart';
 
 class PortfolioScreen extends StatefulWidget {
   const PortfolioScreen({Key? key}) : super(key: key);
@@ -18,8 +19,8 @@ class CryptoData {
 
 List<CryptoData> getChartData() {
   final List<CryptoData> chartData = [
-    CryptoData("XRP", 1,),
-    CryptoData("name", 40)
+    CryptoData("XRP", 50),
+    CryptoData("ATOM", 40)
   ];
 
   return chartData;
@@ -56,7 +57,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                 ],
               ),
             ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton:FloatingActionButton.extended(
           backgroundColor: Colors.amber,
         label: const Text("ADD"),

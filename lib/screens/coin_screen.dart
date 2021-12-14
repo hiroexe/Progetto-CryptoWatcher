@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:crypto_tracker/models/chart_sample_data_model.dart';
-import 'package:crypto_tracker/models/card_model.dart';
 import 'package:flutter/material.dart';
-import 'package:crypto_tracker/screens/screens.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as https;
@@ -20,6 +18,7 @@ class CoinScreen extends StatefulWidget {
   late final double marketCap;
   late final double marketCapRank;
   late final double circulatingSupply;
+
 
   CoinScreen({
     required this.id,
@@ -112,9 +111,9 @@ class CoinScreenState extends State<CoinScreen> {
           title: Row (
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Text('|  ',),
-                Text(this.symbol.toUpperCase()),
-                Text('/USD')
+                const Text('|  ',),
+                Text(symbol.toUpperCase()),
+                const Text('/USD')
               ]
 
 
@@ -126,7 +125,7 @@ class CoinScreenState extends State<CoinScreen> {
           scrollDirection: Axis.vertical,
           children: <Widget>[
 
-          Container(
+          SizedBox(
           height: 100,
           child: Row(
             children: [
@@ -226,30 +225,28 @@ class CoinScreenState extends State<CoinScreen> {
 
 
 
-           Container(
-             child: SfCartesianChart(
-                 series: <CandleSeries>[
-                  CandleSeries<ChartSampleData, DateTime> (
-                      enableSolidCandles: true,
-                      dataSource: data,
-                      xValueMapper: (ChartSampleData sales, _) => sales.x,
-                      lowValueMapper: (ChartSampleData sales, _) => sales.low,
-                      highValueMapper: (ChartSampleData sales, _) => sales.high,
-                      openValueMapper: (ChartSampleData sales, _) => sales.open,
-                      closeValueMapper: (ChartSampleData sales, _) => sales.close),
-                  ],
-                  primaryXAxis: DateTimeAxis(
-                    dateFormat: DateFormat.MMMd(),
-                    majorGridLines: MajorGridLines(width: 0),
-                    ),
-                  primaryYAxis: NumericAxis(
-                      majorGridLines: MajorGridLines(width: 1),
-                      minimum: this.currentPrice / 1.1,
-                      maximum: this.currentPrice * 1.1,
-                      interval: this.currentPrice / 13,
-                      numberFormat: NumberFormat.simpleCurrency(decimalDigits: 2)),
+           SfCartesianChart(
+               series: <CandleSeries>[
+                CandleSeries<ChartSampleData, DateTime> (
+                    enableSolidCandles: true,
+                    dataSource: data,
+                    xValueMapper: (ChartSampleData sales, _) => sales.x,
+                    lowValueMapper: (ChartSampleData sales, _) => sales.low,
+                    highValueMapper: (ChartSampleData sales, _) => sales.high,
+                    openValueMapper: (ChartSampleData sales, _) => sales.open,
+                    closeValueMapper: (ChartSampleData sales, _) => sales.close),
+                ],
+                primaryXAxis: DateTimeAxis(
+                  dateFormat: DateFormat.MMMd(),
+                  majorGridLines: const MajorGridLines(width: 0),
                   ),
-           ),
+                primaryYAxis: NumericAxis(
+                    majorGridLines: const MajorGridLines(width: 1),
+                    minimum: currentPrice / 1.1,
+                    maximum: currentPrice * 1.1,
+                    interval: currentPrice / 13,
+                    numberFormat: NumberFormat.simpleCurrency(decimalDigits: 2)),
+                ),
 
 
          SizedBox(
@@ -286,101 +283,78 @@ class CoinScreenState extends State<CoinScreen> {
             child: FittedBox(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  child: Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                            Text(' '),
-                            Text('Total Volume:',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),),
-                            Text('Circulating Supply:',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),),
-                            Text('MarketCap:',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),),
-                            Text('MarketCap Rank:',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),),
-
-
-
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
+                child: Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: const [
                           Text(' '),
-                          Text(this.totalVolume.toString(),
+                          Text('Total Volume:',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 15,
-                              fontWeight: FontWeight.normal,
+                              fontWeight: FontWeight.bold,
                             ),),
-                          Text(this.circulatingSupply.toString(),
+                          Text('Circulating Supply:',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 15,
-                              fontWeight: FontWeight.normal,
+                              fontWeight: FontWeight.bold,
                             ),),
-                          Text(this.marketCap.toString(),
+                          Text('MarketCap:',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 15,
-                              fontWeight: FontWeight.normal,
+                              fontWeight: FontWeight.bold,
                             ),),
-                          Text(this.circulatingSupply.toString(),
+                          Text('MarketCap Rank:',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 15,
-                              fontWeight: FontWeight.normal,
+                              fontWeight: FontWeight.bold,
                             ),),
 
 
 
-                        ],
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        const Text(' '),
+                        Text(totalVolume.round().toString(),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.normal,
+                          ),),
+                        Text(circulatingSupply.round().toString(),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.normal,
+                          ),),
+                        Text("${marketCap.toStringAsFixed(0)} M",
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.normal,
+                          ),),
+                        Text(marketCapRank.toStringAsFixed(0),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.normal,
+                          ),),
+
+
+
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
-
-       /*   child: ListView(
-
-                  children: <Widget>[
-                    Container(
-                      height: 5,
-                      color: Colors.amber[600],
-                      child: const Center(child: Text('Entry A')),
-                    ),
-                    Container(
-                      height: 5,
-                      color: Colors.amber[500],
-                      child: const Center(child: Text('Entry B')),
-                    ),
-                    Container(
-                      height: 5,
-                      color: Colors.amber[100],
-                      child: const Center(child: Text('Entry C')),
-                    ),
-                  ],
-                ), */
         ),
       ],
         ),

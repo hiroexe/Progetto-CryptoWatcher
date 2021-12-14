@@ -32,10 +32,11 @@ class _CryptoScreenState extends State <CryptoScreen> {
             Map<String, dynamic> map = values[i];
             coinList.add(CryptoModel.fromJson(map));
           }
-        }
+        }if(mounted){
         setState(() {
           coinList;
         });
+        }
       }
       return coinList;
     } else {
@@ -46,8 +47,10 @@ class _CryptoScreenState extends State <CryptoScreen> {
   //https://stackoverflow.com/questions/68817813/flutter-error-setstate-called-after-dispose
   void initState() {
     fetchCoin();
-    if(mounted) {
-      Timer.periodic(const Duration(seconds: 60), (timer) => fetchCoin());
+    Timer timer =  Timer.periodic(const Duration(seconds: 60), (timer) => fetchCoin());
+    if(!mounted) {
+      timer.cancel();
+    } else{
       super.initState();
     }
   }

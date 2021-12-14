@@ -37,7 +37,7 @@ class CoinCard extends StatelessWidget {
       child: ElevatedButton(
           child: Padding(
             padding: const EdgeInsets.all(0.0),
-            child: Container(
+            child: SizedBox(
               height: 100,
               child: Row(
                 children: [
