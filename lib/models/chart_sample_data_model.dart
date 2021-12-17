@@ -25,5 +25,7 @@ class ChartSampleData {
   }
 }
 
-List<ChartSampleData> data = [];
+List<ChartSampleData> data1 = [];
+List<ChartSampleData> data30 = [];
+List<ChartSampleData> data365 = [];
 

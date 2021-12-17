@@ -28,11 +28,12 @@ class CryptoModel {
 
 
   CryptoModel.fromJson(Map<String, dynamic> json){
+
     id = json['id'] ?? "no id";
     symbol = json['symbol'] ?? "no symbol";
     name = json['name'] ?? "no name";
     image = json['image'] ?? "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579";
-    currentPrice = json['current_price'];
+    currentPrice = json['current_price'] ?? 0;
     priceChange_24h = json['price_change_24h'] ?? 0;
     priceChangePercentage_24h = json['price_change_percentage_24h'] ?? 0;
     totalVolume = json['total_volume'] ?? 0;
