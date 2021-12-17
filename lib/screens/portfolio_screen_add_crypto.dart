@@ -1,11 +1,9 @@
-
 import 'dart:async';
 import 'dart:convert';
 import 'package:crypto_tracker/provider/portfolio_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
-import 'package:crypto_tracker/models/portfolio_crypto_model.dart';
 
 class AddCryptoToChart extends StatefulWidget {
   const AddCryptoToChart({Key? key}) : super(key: key);
@@ -15,7 +13,11 @@ class AddCryptoToChart extends StatefulWidget {
 }
 
 class _AddCryptoToChartState extends State<AddCryptoToChart> {
+  String _inputSymbol = "First try";
+  num _inputPrice = -1;
+  num _inputQuantity = -1;
 
+  /*
   Future<List<PortfolioCryptoModel>> fetchCoinPortfolio() async {
     portfolioList = [];
     final response = await https.get(Uri.parse(
@@ -29,17 +31,17 @@ class _AddCryptoToChartState extends State<AddCryptoToChart> {
             Map<String, dynamic> map = values[i];
             portfolioList.add(PortfolioCryptoModel.fromJson(map));
           }
+        }if(mounted){
+          setState(() {
+            portfolioList;
+          });
         }
-        setState(() {
-          portfolioList;
-        });
       }
       return portfolioList;
     } else {
       throw Exception('Failed to load coins');
     }
   }
-
   @override
   void initState() {
     fetchCoinPortfolio();
@@ -48,34 +50,40 @@ class _AddCryptoToChartState extends State<AddCryptoToChart> {
       super.initState();
     }
   }
-  String dropDownValue = "Choose the crypto you like to add";
+
+   */
+
   @override
   Widget build(BuildContext context) {
+    ChartStats statsNotifier = Provider.of<ChartStats>(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Add your Crypto"),
+        title: const Text("Add your crypto"),
       ),
-        body :Column(
-          children: [
-            TextField(
-              textAlign: TextAlign.center,
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                hintText: 'Enter your Crypto symbol',
-                hintStyle: const TextStyle(fontSize: 16),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: const BorderSide(
-                    width: 0,
-                    style: BorderStyle.none,
-                  ),
+      body: Column(
+        children: [
+          TextField(
+            textAlign: TextAlign.center,
+            keyboardType: TextInputType.text,
+            decoration: InputDecoration(
+              hintText: 'Enter your Crypto symbol',
+              hintStyle: const TextStyle(fontSize: 16),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+                borderSide: const BorderSide(
+                  width: 0,
+                  style: BorderStyle.none,
                 ),
-                filled: true,
-                contentPadding: const EdgeInsets.all(20.0),
               ),
-              onChanged: (String) => context.read<ChartStats>().name,
+              filled: true,
+              contentPadding: const EdgeInsets.all(20.0),
             ),
-            TextField(
+            onChanged: (valueN) {
+              _inputSymbol = valueN;
+            },
+          ),
+          TextField(
               textAlign: TextAlign.center,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
@@ -91,39 +99,51 @@ class _AddCryptoToChartState extends State<AddCryptoToChart> {
                 filled: true,
                 contentPadding: const EdgeInsets.all(20.0),
               ),
-              onChanged: (num) => context.read<ChartStats>().price,
-            ),
-            TextField(
-              textAlign: TextAlign.center,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                hintText: 'Enter the quantity of crypto you bought',
-                hintStyle: const TextStyle(fontSize: 16),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: const BorderSide(
-                    width: 0,
-                    style: BorderStyle.none,
-                  ),
+              onChanged: (valueP) {
+                _inputPrice = double.parse(valueP);
+              }),
+          TextField(
+            textAlign: TextAlign.center,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              hintText: 'Enter the quantity of crypto you bought ',
+              hintStyle: const TextStyle(fontSize: 16),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+                borderSide: const BorderSide(
+                  width: 0,
+                  style: BorderStyle.none,
                 ),
-                filled: true,
-                contentPadding: const EdgeInsets.all(20.0),
               ),
-                onChanged: (num) => context.read<ChartStats>().quantity,
+              filled: true,
+              contentPadding: const EdgeInsets.all(20.0),
             ),
-          ],
-        ),
-       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-       floatingActionButton:FloatingActionButton.extended(
-         backgroundColor: Colors.amber,
-         label: const Text("ADD"),
-         icon: const Icon(Icons.add),
+            onChanged: (valueQ) {
+              _inputQuantity = double.parse(valueQ);
+            },
+          ),
+          FloatingActionButton(
+            onPressed: () {
+              statsNotifier.clearList();
+            },
+          ),
+        ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Colors.amber,
+        label: const Text("ADD"),
+        icon: const Icon(Icons.add),
         onPressed: () {
+          context
+              .read<ChartStats>()
+              .addStats(Stats(_inputSymbol, _inputPrice, _inputQuantity));
           Navigator.pop(context);
+          debugPrint(_inputSymbol);
+          debugPrint(_inputPrice.toString());
+          debugPrint(_inputQuantity.toString());
         },
-        ),
-      );
+      ),
+    );
   }
-
 }
-

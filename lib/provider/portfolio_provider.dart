@@ -1,24 +1,34 @@
+
+
 import 'package:flutter/material.dart';
 
+class Stats{
+
+ String name = "DEBUG";
+ num price = 0;
+ num quantity = 0;
+
+ Stats(this.name, this.price, this.quantity);
+
+}
+
 class ChartStats with ChangeNotifier{
-  String name ="";
-  num price = -1;
-  num quantity = -1;
+  final List <Stats> _statsList = [];
+
+  List <Stats> get statsList => _statsList;
 
 
-  void chartName(String x) {
-    String name = x;
+  addStats (Stats stats){
+    statsList.add(stats);
     notifyListeners();
   }
 
-  void chartPrice(num y) {
-    num price = y ;
-    notifyListeners();
+  deleteStats (index){
+    _statsList.removeWhere((_stats) => _stats.name == statsList[index].name);
+  }
+  clearList (){
+    statsList.clear();
   }
 
-  void chartQuantity(num z) {
-    num quantity = z;
-    notifyListeners();
-  }
 }
 
