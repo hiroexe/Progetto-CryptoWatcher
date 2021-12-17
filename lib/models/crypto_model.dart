@@ -28,17 +28,17 @@ class CryptoModel {
 
 
   CryptoModel.fromJson(Map<String, dynamic> json){
-    id = json['id'];
+    id = json['id'] ?? "no id ";
     symbol = json['symbol'];
     name = json['name'];
     image = json['image'];
     currentPrice = json['current_price'];
-    priceChange_24h = json['price_change_24h'];
-    priceChangePercentage_24h = json['price_change_percentage_24h'];
-    totalVolume = json['total_volume'];
-    marketCap = json['market_cap'];
-    marketCapRank = json['market_cap_rank'];
-    circulatingSupply = json['circulating_supply'];
+    priceChange_24h = json['price_change_24h'] ?? 0;
+    priceChangePercentage_24h = json['price_change_percentage_24h'] ?? 0;
+    totalVolume = json['total_volume'] ?? 0;
+    marketCap = json['market_cap'] ?? 0;
+    marketCapRank = json['market_cap_rank'] ?? 0;
+    circulatingSupply = json['circulating_supply'] ?? 0;
   }
 
   Map<String, dynamic> toJson() {
