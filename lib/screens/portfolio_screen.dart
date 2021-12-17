@@ -11,29 +11,37 @@ class PortfolioScreen extends StatefulWidget {
   State<PortfolioScreen> createState() => _PortfolioScreenState();
 }
 
-/*
+
+
 class CryptoData {
   CryptoData(this.name, this.price);
-   String? name;
-   num? price;
+  String name = "Debug";
+  num price = -1 ;
 }
 
-List<CryptoData> getChartData() {
-  List<CryptoData> chartData = [
-        CryptoData(ChartStats().nameProvider, ChartStats().quantityProvider)
-  ];
-  debugPrint("Name ${ChartStats().nameProvider}");
-  debugPrint(ChartStats().quantityProvider.toString());
-  return chartData;
-}
-
- */
 class _PortfolioScreenState extends State<PortfolioScreen> {
   @override
   void initState() {
     _tooltipBehavior = TooltipBehavior(enable: true);
     super.initState();
   }
+
+
+  List<CryptoData> getChartData() {
+    List<CryptoData> chartData = [CryptoData("Nessun Valore", 0)];
+    for(int i = 0 ; i < context.read<ChartStats>().statsList.length ; i++){
+      if(context.watch<ChartStats>().statsList[i].name.isNotEmpty){
+          chartData = [
+            CryptoData(
+              context.watch<ChartStats>().statsList[i].name,
+              context.watch<ChartStats>().statsList[i].quantity,
+          )];
+          return chartData;
+      }
+    }
+    return chartData;
+  }
+
 
   late TooltipBehavior _tooltipBehavior;
 
@@ -49,12 +57,10 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
             ),
             tooltipBehavior: _tooltipBehavior,
             series: <CircularSeries>[
-              DoughnutSeries<Stats, String>(
-                dataSource: ChartStats().statsList,
-                xValueMapper: (Stats data, _) =>
-                    context.watch<ChartStats>().statsList[0].name,
-                yValueMapper: (Stats data, _) =>
-                    context.watch<ChartStats>().statsList[0].quantity,
+              DoughnutSeries<CryptoData, String>(
+                dataSource: getChartData(),
+                xValueMapper: (CryptoData data, _) => data.name,
+                yValueMapper: (CryptoData data, _) => data.price,
                 dataLabelSettings: const DataLabelSettings(isVisible: true),
                 enableTooltip: true,
               )
@@ -70,6 +76,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
         onPressed: () {
           Navigator.push(
               context,
+
               MaterialPageRoute(
                   builder: (context) => const AddCryptoToChart()));
         },
