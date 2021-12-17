@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:crypto_tracker/provider/portfolio_provider.dart';
+import 'package:crypto_tracker/screens/portfolio_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
@@ -139,9 +140,7 @@ class _AddCryptoToChartState extends State<AddCryptoToChart> {
               .read<ChartStats>()
               .addStats(Stats(_inputSymbol, _inputPrice, _inputQuantity));
           Navigator.pop(context);
-          debugPrint(_inputSymbol);
-          debugPrint(_inputPrice.toString());
-          debugPrint(_inputQuantity.toString());
+
         },
       ),
     );
