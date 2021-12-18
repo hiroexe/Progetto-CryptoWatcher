@@ -92,9 +92,11 @@ class CoinScreenState extends State<CoinScreen> {
             data1.add(ChartSampleData.fromJson(list));
           }
         }
-        setState(() {
-          data1;
-        });
+        if (mounted) {
+          setState(() {
+            data1;
+          });
+        }
       }
       return data1;
     } else {
@@ -118,9 +120,11 @@ class CoinScreenState extends State<CoinScreen> {
             data30.add(ChartSampleData.fromJson(list));
           }
         }
-        setState(() {
-          data30;
-        });
+        if (mounted) {
+          setState(() {
+            data30;
+          });
+        }
       }
       return data30;
     } else {
@@ -144,9 +148,11 @@ class CoinScreenState extends State<CoinScreen> {
             data365.add(ChartSampleData.fromJson(list));
           }
         }
-        setState(() {
-          data365;
-        });
+        if (mounted) {
+          setState(() {
+            data365;
+          });
+        }
       }
       return data365;
     } else {
@@ -165,9 +171,7 @@ class CoinScreenState extends State<CoinScreen> {
     getChartDataAll();
     trackballBehavior = TrackballBehavior(
         enable: true, activationMode: ActivationMode.longPress);
-    if (mounted) {
-      Timer.periodic(const Duration(seconds: 60), (timer) => getChartDataAll());
-    }
+    Timer.periodic(const Duration(seconds: 60), (timer) => getChartDataAll());
     super.initState();
   }
 
@@ -177,11 +181,11 @@ class CoinScreenState extends State<CoinScreen> {
       appBar: AppBar(
         title:
             Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-          const Text(
-            '|  ',
+              const Text(
+                '|  ',
           ),
-          Text(symbol.toUpperCase()),
-          const Text('/USD')
+               Text(symbol.toUpperCase()),
+              const Text('/USD')
         ]),
         actions: <Widget>[
           IconButton(
@@ -336,8 +340,7 @@ class CoinScreenState extends State<CoinScreen> {
                         CandleSeries<ChartSampleData, DateTime>(
                             enableSolidCandles: true,
                             dataSource: data30,
-                            xValueMapper: (ChartSampleData sales, _) =>
-                                sales.x,
+                            xValueMapper: (ChartSampleData sales, _) => sales.x,
                             lowValueMapper: (ChartSampleData sales, _) =>
                                 sales.low,
                             highValueMapper: (ChartSampleData sales, _) =>
