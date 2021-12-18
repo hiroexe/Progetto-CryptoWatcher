@@ -85,9 +85,12 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
 
   @override
   void initState() {
-    _chartData = getChartData();
-    _tooltipBehavior = TooltipBehavior(enable: true);
     super.initState();
+    _tooltipBehavior = TooltipBehavior(enable: true);
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      _chartData = getChartData();
+    });
+
   }
 
   late List<CryptoData> _chartData;
