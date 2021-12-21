@@ -50,19 +50,10 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
             portfolioList.add(PortfolioCryptoModel.fromJson(map));
           }
         }
-        if (mounted) {
-          for (int i = 0;
-              i <= context.watch<ChartStats>().statsList.length;
-              i++) {
-            for (int j = 0; j <= i; i++) {
-              if (context.watch<ChartStats>().statsList[i].name ==
-                  portfolioList[j].symbol) {
-                setState(() {
-                  portfolioList;
-                });
-              }
-            }
-          }
+        if(mounted){
+          setState(() {
+            portfolioList;
+          });
         }
       }
       return portfolioList;

@@ -20,15 +20,23 @@ class ChartStats with ChangeNotifier{
 
   addStats (Stats stats){
     int i = 0;
-    for (var stats in statsList) {
-      if(statsList[i].name == stats.name){
-        statsList[i].quantity += stats.quantity;
-        print ("true");
-      } i++;
-      print("false");
-    }
+    bool a = true;
+    if(statsList.isNotEmpty) {
+      for (var stats in statsList) {
+        if (statsList[i].name == stats.name) {
+          statsList[i].quantity += stats.quantity;
+          a = false;
+          notifyListeners();
+          print("true");
+        }
+        i++;
+        print("false");
+      }
+    } else if (a == true){
       statsList.add(stats);
       notifyListeners();
+    }
+
   }
   isNew (Stats stats) {
     int i = 0;
