@@ -41,9 +41,9 @@ class AuthServices with ChangeNotifier {
     } on SocketException{
       setLoading(false);
       setMessage("No connection, please connect to internet");
-    } catch(e) {
+    } on FirebaseAuthException catch(e) {
       setLoading(false);
-      setMessage(e);
+      setMessage(e.message);
     }
     notifyListeners();
   }

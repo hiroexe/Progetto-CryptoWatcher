@@ -163,6 +163,21 @@ class _SignInState extends State<SignIn> {
                       ),
                     ],
                   ),
+                  if(signInProvider.errorMessage != null)
+                    Container(
+                      color: Colors.amberAccent,
+                      child: ListTile(
+                          title: Text(signInProvider.errorMessage!,
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),),
+                          leading: Icon(Icons.error),
+                          trailing: IconButton(
+                            icon: Icon(Icons.close),
+                            onPressed: () => signInProvider.setMessage(null),
+                          )
+                      ),
+                    )
                 ],
               ),
             ),

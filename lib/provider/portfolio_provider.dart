@@ -18,18 +18,28 @@ class ChartStats with ChangeNotifier{
   List <Stats> get statsList => _statsList;
 
 
-  addStats (Stats stats){
-    int i = 0;
-    for (var stats in statsList) {
-      if(statsList[i].name == stats.name){
-        statsList[i].quantity += stats.quantity;
-        print ("true");
-      } i++;
-      print("false");
+  addStats (Stats stats) {
+    bool a = true;
+    if (statsList.isNotEmpty) {
+      for (int i = 0; i < statsList.length; i++) {
+        if (statsList[i].name == stats.name) {
+          statsList[i].quantity += stats.quantity;
+          a = false;
+          notifyListeners();
+        }
+
+      }
     }
+    if (a == true) {
       statsList.add(stats);
       notifyListeners();
+    }
   }
+
+
+
+
+
   isNew (Stats stats) {
     int i = 0;
     for (var stats in statsList) {
