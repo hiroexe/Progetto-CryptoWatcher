@@ -1,8 +1,14 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:crypto_tracker/models/portfolio_card.dart';
+import 'package:crypto_tracker/models/portfolio_crypto_model.dart';
+import 'package:crypto_tracker/screens/portfolio_screen_add_crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:crypto_tracker/screens/portfolio_screen_add_crypto.dart';
 import 'package:crypto_tracker/provider/portfolio_provider.dart';
+import 'package:http/http.dart' as https;
 
 class PortfolioScreen extends StatefulWidget {
   const PortfolioScreen({Key? key}) : super(key: key);
@@ -13,12 +19,13 @@ class PortfolioScreen extends StatefulWidget {
 
 class CryptoData {
   CryptoData(this.name, this.price);
+
   String name = "Debug";
-  num price = -1 ;
+  num price = -1;
 }
 
-num Earn (num buyPrice , num currentPrice , num quantity){
-  num  earn = (currentPrice * quantity) - (buyPrice * quantity);
+num earn(num buyPrice, num currentPrice, num quantity) {
+  num earn = (currentPrice - buyPrice) * quantity;
   return earn;
 }
 /*
@@ -29,8 +36,6 @@ num EarnPercentace (num earn , num ) {
  */
 
 class _PortfolioScreenState extends State<PortfolioScreen> {
-
-  /*
   Future<List<PortfolioCryptoModel>> fetchCoinPortfolio() async {
     portfolioList = [];
     final response = await https.get(Uri.parse(
@@ -44,10 +49,20 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
             Map<String, dynamic> map = values[i];
             portfolioList.add(PortfolioCryptoModel.fromJson(map));
           }
-        }if(mounted){
-          setState(() {
-            portfolioList;
-          });
+        }
+        if (mounted) {
+          for (int i = 0;
+              i <= context.watch<ChartStats>().statsList.length;
+              i++) {
+            for (int j = 0; j <= i; i++) {
+              if (context.watch<ChartStats>().statsList[i].name ==
+                  portfolioList[j].symbol) {
+                setState(() {
+                  portfolioList;
+                });
+              }
+            }
+          }
         }
       }
       return portfolioList;
@@ -55,34 +70,35 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
       throw Exception('Failed to load coins');
     }
   }
+
   @override
   void initState() {
     fetchCoinPortfolio();
-    if(mounted) {
-      Timer.periodic(const Duration(seconds: 60), (timer) => fetchCoinPortfolio());
-      super.initState();
-    }
+    super.initState();
+    Timer.periodic(
+        const Duration(seconds: 60), (timer) => fetchCoinPortfolio());
+    _tooltipBehavior = TooltipBehavior(enable: true);
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      _chartData = getChartData();
+    });
   }
-
-   */
 
   List<CryptoData> getChartData() {
     List<CryptoData> chartData = [];
-    for(int i = 0 ; i < context.read<ChartStats>().statsList.length ; i++){
-      if(context.watch<ChartStats>().statsList[i].name.isNotEmpty){
-          chartData.add(CryptoData(
-            context.watch<ChartStats>().statsList[i].name,
+    for (int i = 0; i < context.read<ChartStats>().statsList.length; i++) {
+      if (context.watch<ChartStats>().statsList[i].name.isNotEmpty) {
+        chartData.add(CryptoData(context.watch<ChartStats>().statsList[i].name,
             context.watch<ChartStats>().statsList[i].quantity));
 
-          debugPrint("DEBUG " +
-              context.watch<ChartStats>().statsList[i].name);
-          debugPrint("DEBUG " +
-              context.watch<ChartStats>().statsList[i].quantity.toString());
+        debugPrint("DEBUG " + context.watch<ChartStats>().statsList[i].name);
+        debugPrint("DEBUG " +
+            context.watch<ChartStats>().statsList[i].quantity.toString());
       }
     }
     return chartData;
   }
 
+  /*
   @override
   void initState() {
     super.initState();
@@ -90,8 +106,9 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       _chartData = getChartData();
     });
-
   }
+
+   */
 
   late List<CryptoData> _chartData;
   late TooltipBehavior _tooltipBehavior;
@@ -100,38 +117,59 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
   Widget build(BuildContext context) {
     return Center(
       child: Scaffold(
-        body: Consumer<ChartStats>(
-          builder: (_, notifier, __) => SfCircularChart(
-          title: ChartTitle(text: 'Crypto portfolio \n (in USD)'),
-          legend: Legend(
-              isVisible: true, overflowMode: LegendItemOverflowMode.wrap
-          ),
-          tooltipBehavior: _tooltipBehavior,
-          series: <CircularSeries>[
-            DoughnutSeries<CryptoData, String>(
-              dataSource: getChartData(),
-              xValueMapper: (CryptoData data, _) => data.name.toUpperCase(),
-              yValueMapper: (CryptoData data, _) => data.price,
-              dataLabelSettings: const DataLabelSettings(isVisible: true),
-              enableTooltip: true,
-            )
+        body: ListView(
+          children: [
+            Center(
+              child: Consumer<ChartStats>(
+                builder: (_, notifier, __) => SfCircularChart(
+                  title: ChartTitle(text: 'Crypto portfolio \n (in USD)'),
+                  legend: Legend(
+                      isVisible: true,
+                      overflowMode: LegendItemOverflowMode.wrap),
+                  tooltipBehavior: _tooltipBehavior,
+                  series: <CircularSeries>[
+                    DoughnutSeries<CryptoData, String>(
+                      dataSource: getChartData(),
+                      xValueMapper: (CryptoData data, _) =>
+                          data.name.toUpperCase(),
+                      yValueMapper: (CryptoData data, _) => data.price,
+                      dataLabelSettings:
+                          const DataLabelSettings(isVisible: true),
+                      enableTooltip: true,
+                    )
+                  ],
+                ),
+              ),
+            ),
+            FloatingActionButton.extended(
+              heroTag: const Text("AddBtn"),
+              backgroundColor: Colors.amber,
+              label: const Text("ADD"),
+              icon: const Icon(Icons.add),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const AddCryptoToChart()));
+              },
+            ),
+            ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: context.read<ChartStats>().statsList.length,
+              itemBuilder: (context, index) {
+                return PortfolioCard(
+                  symbol: portfolioList[index].symbol,
+                  image: portfolioList[index].image,
+                  currentPrice: earn(
+                      context.watch<ChartStats>().statsList[index].price,
+                      portfolioList[index].currentPrice,
+                      context.watch<ChartStats>().statsList[index].quantity),
+                );
+              },
+            ),
           ],
         ),
-          ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: Colors.amber,
-          label: const Text("ADD"),
-          icon: const Icon(Icons.add),
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const AddCryptoToChart()));
-          },
-        ),
-
-
       ),
     );
   }
