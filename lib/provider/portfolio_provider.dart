@@ -18,48 +18,25 @@ class ChartStats with ChangeNotifier{
   List <Stats> get statsList => _statsList;
 
 
-  addStats (Stats stats){
-    int i = 0;
+
+  addStats (Stats stats) {
     bool a = true;
-    if(statsList.isNotEmpty) {
-      for (var stats in statsList) {
+    if (statsList.isNotEmpty) {
+      for (int i = 0; i < statsList.length; i++) {
         if (statsList[i].name == stats.name) {
           statsList[i].quantity += stats.quantity;
           a = false;
           notifyListeners();
-          print("true");
         }
         i++;
-        print("false");
       }
-    } else if (a == true){
+    } if (a == true){
       statsList.add(stats);
       notifyListeners();
     }
 
   }
-  isNew (Stats stats) {
-    int i = 0;
-    for (var stats in statsList) {
-      if(statsList[i].name == stats.name){
-        statsList[i].quantity += stats.quantity;
-        print ("true");
-      } i++;
-      print("false");
-    }
-  }
 
-
-  index (Stats stats){
-    int index = 0 ;
-      for(int  i = 0 ; i < statsList.length; i++)  {
-        if(stats.name == statsList[i].name){
-          index = i;
-          print("index" + index.toString());
-        }
-      }
-    return index;
-  }
 
   deleteStats (index){
     _statsList.removeWhere((_stats) => _stats.name == statsList[index].name);

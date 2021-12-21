@@ -109,6 +109,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
     return Center(
       child: Scaffold(
         body: ListView(
+          scrollDirection: Axis.vertical,
           children: [
             Center(
               child: Consumer<ChartStats>(

@@ -9,9 +9,18 @@ class WatchListProvider with ChangeNotifier {
 
 
   addToWatchList (CoinScreen crypto){
-    if(!crypto.favorite){
+    bool a = true;
+    if (watchList.isNotEmpty) {
+      for (int i = 0; i < watchList.length; i++) {
+        if (watchList[i].name == crypto.name) {
+          a = false;
+          notifyListeners();
+        }
+
+      }
+    }
+    if (a == true) {
       watchList.add(crypto);
-      crypto.favorite = true;
       notifyListeners();
     }
   }
