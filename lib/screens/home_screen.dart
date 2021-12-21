@@ -1,5 +1,7 @@
 import 'package:crypto_tracker/screens/screens.dart';
+import 'package:crypto_tracker/services/auth_services.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -26,12 +28,12 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
+  final signInProvider = Provider.of<AuthServices>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey[800],
-        title: const Center(
-          child: Text(
+        centerTitle: true,
+        title: Text(
             'CRYPTOWATCHER',
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -40,7 +42,16 @@ class HomeScreenState extends State<HomeScreen> {
               fontWeight: FontWeight.bold,
             ),
           ),
-        ),
+
+        leading:
+          IconButton(
+              onPressed: () async => await signInProvider.logOut(),
+              icon: Icon(
+                Icons.exit_to_app_rounded
+
+              ),
+          ),
+
       ),
       body: _screenList[_selectedIndex],
       backgroundColor: Colors.grey,

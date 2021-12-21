@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "176719040178",
+    "project_id": "cryptowatcher-daa7a",
+    "storage_bucket": "cryptowatcher-daa7a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:176719040178:android:535b31f5b20f30f72283ab",
+        "android_client_info": {
+          "package_name": "com.noname.crypto_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "176719040178-76ru7rfegsifcaiqqk3pql061sot3te0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSqE86pbtdgOIzzs5I4OPA04SUY4OtltQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "176719040178-76ru7rfegsifcaiqqk3pql061sot3te0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
