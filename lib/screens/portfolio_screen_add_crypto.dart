@@ -1,10 +1,6 @@
-import 'dart:async';
-import 'dart:convert';
 import 'package:crypto_tracker/provider/portfolio_provider.dart';
-import 'package:crypto_tracker/screens/portfolio_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as https;
 
 class AddCryptoToChart extends StatefulWidget {
   const AddCryptoToChart({Key? key}) : super(key: key);
@@ -56,7 +52,7 @@ class _AddCryptoToChartState extends State<AddCryptoToChart> {
 
   @override
   Widget build(BuildContext context) {
-    ChartStats statsNotifier = Provider.of<ChartStats>(context);
+    ChartStats statsNotifier = Provider.of<ChartStats>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -64,31 +60,13 @@ class _AddCryptoToChartState extends State<AddCryptoToChart> {
       ),
       body: Column(
         children: [
-          TextField(
-            textAlign: TextAlign.center,
-            keyboardType: TextInputType.text,
-            decoration: InputDecoration(
-              hintText: 'Enter your Crypto symbol',
-              hintStyle: const TextStyle(fontSize: 16),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
-                borderSide: const BorderSide(
-                  width: 0,
-                  style: BorderStyle.none,
-                ),
-              ),
-              filled: true,
-              contentPadding: const EdgeInsets.all(20.0),
-            ),
-            onChanged: (valueN) {
-              _inputSymbol = valueN;
-            },
-          ),
-          TextField(
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+            child: TextField(
               textAlign: TextAlign.center,
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.text,
               decoration: InputDecoration(
-                hintText: 'Enter the price you bought your crypto',
+                hintText: 'Enter your Crypto symbol',
                 hintStyle: const TextStyle(fontSize: 16),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
@@ -100,38 +78,61 @@ class _AddCryptoToChartState extends State<AddCryptoToChart> {
                 filled: true,
                 contentPadding: const EdgeInsets.all(20.0),
               ),
-              onChanged: (valueP) {
-                _inputPrice = double.parse(valueP);
-              }),
-          TextField(
-            textAlign: TextAlign.center,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              hintText: 'Enter the quantity of crypto you bought ',
-              hintStyle: const TextStyle(fontSize: 16),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
-                borderSide: const BorderSide(
-                  width: 0,
-                  style: BorderStyle.none,
-                ),
-              ),
-              filled: true,
-              contentPadding: const EdgeInsets.all(20.0),
+              onChanged: (valueN) {
+                _inputSymbol = valueN;
+              },
             ),
-            onChanged: (valueQ) {
-              _inputQuantity = double.parse(valueQ);
-            },
           ),
-          FloatingActionButton(
-            onPressed: () {
-              statsNotifier.clearList();
-            },
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+                textAlign: TextAlign.center,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  hintText: 'Enter the price you bought your crypto',
+                  hintStyle: const TextStyle(fontSize: 16),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: const BorderSide(
+                      width: 0,
+                      style: BorderStyle.none,
+                    ),
+                  ),
+                  filled: true,
+                  contentPadding: const EdgeInsets.all(20.0),
+                ),
+                onChanged: (valueP) {
+                  _inputPrice = double.parse(valueP);
+                }),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              textAlign: TextAlign.center,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                hintText: 'Enter the quantity of crypto you bought ',
+                hintStyle: const TextStyle(fontSize: 16),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: const BorderSide(
+                    width: 0,
+                    style: BorderStyle.none,
+                  ),
+                ),
+                filled: true,
+                contentPadding: const EdgeInsets.all(20.0),
+              ),
+              onChanged: (valueQ) {
+                _inputQuantity = double.parse(valueQ);
+              },
+            ),
           ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: "btn2",
         backgroundColor: Colors.amber,
         label: const Text("ADD"),
         icon: const Icon(Icons.add),

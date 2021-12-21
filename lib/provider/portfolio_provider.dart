@@ -19,8 +19,38 @@ class ChartStats with ChangeNotifier{
 
 
   addStats (Stats stats){
-    statsList.add(stats);
-    notifyListeners();
+    int i = 0;
+    for (var stats in statsList) {
+      if(statsList[i].name == stats.name){
+        statsList[i].quantity += stats.quantity;
+        print ("true");
+      } i++;
+      print("false");
+    }
+      statsList.add(stats);
+      notifyListeners();
+  }
+  isNew (Stats stats) {
+    int i = 0;
+    for (var stats in statsList) {
+      if(statsList[i].name == stats.name){
+        statsList[i].quantity += stats.quantity;
+        print ("true");
+      } i++;
+      print("false");
+    }
+  }
+
+
+  index (Stats stats){
+    int index = 0 ;
+      for(int  i = 0 ; i < statsList.length; i++)  {
+        if(stats.name == statsList[i].name){
+          index = i;
+          print("index" + index.toString());
+        }
+      }
+    return index;
   }
 
   deleteStats (index){
@@ -29,6 +59,8 @@ class ChartStats with ChangeNotifier{
   clearList (){
     statsList.clear();
   }
+
+
 
 }
 

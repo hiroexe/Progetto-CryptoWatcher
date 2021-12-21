@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:crypto_tracker/models/chart_sample_data_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:crypto_tracker/provider/watchlist_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as https;
 
@@ -18,6 +20,7 @@ class CoinScreen extends StatefulWidget {
   late final double marketCap;
   late final double marketCapRank;
   late final double circulatingSupply;
+  bool favorite = false;
 
   CoinScreen(
       {required this.id,
@@ -177,22 +180,61 @@ class CoinScreenState extends State<CoinScreen> {
 
   @override
   Widget build(BuildContext context) {
+    WatchListProvider watchListNotifier =
+        Provider.of<WatchListProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title:
             Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-              const Text(
-                '|  ',
+               const Text(
+            '|  ',
           ),
-               Text(symbol.toUpperCase()),
+              Text(symbol.toUpperCase()),
               const Text('/USD')
         ]),
         actions: <Widget>[
+          /*
           IconButton(
             icon: const Icon(Icons.star_border),
             onPressed: () {
-              // handle the press
+              watchListNotifier.addToWatchList(CoinScreen(
+                  id: id,
+                  symbol: symbol,
+                  name: name,
+                  image: image,
+                  currentPrice: currentPrice,
+                  priceChange_24h: priceChange_24h,
+                  priceChangePercentage_24h: priceChangePercentage_24h,
+                  totalVolume: totalVolume,
+                  marketCap: marketCap,
+                  marketCapRank: marketCapRank,
+                  circulatingSupply: circulatingSupply));
             },
+          ),
+          */
+          if (watchListNotifier.watchList.contains(context) == false)
+            GestureDetector(
+                onTap: () {
+              watchListNotifier.addToWatchList(CoinScreen(id: id,
+                  symbol: symbol,
+                  name: name,
+                  image: image,
+                  currentPrice: currentPrice,
+                  priceChange_24h: priceChange_24h,
+                  priceChangePercentage_24h: priceChangePercentage_24h,
+                  totalVolume: totalVolume,
+                  marketCap: marketCap,
+                  marketCapRank: marketCapRank,
+                  circulatingSupply: circulatingSupply));
+                },
+                child: const Icon(Icons.star_border),
+          ) else GestureDetector(
+            onTap: () {
+              watchListNotifier.removeFormWatchList(0);
+
+            },
+            child: const Icon(Icons.star),
           ),
         ],
       ),
