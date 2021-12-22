@@ -47,21 +47,33 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
       if (values.isNotEmpty) {
         for (int i = 0; i < values.length; i++) {
           if (values[i] != null) {
-
             Map<String, dynamic> map = values[i];
-
-            if(values[i] == context.watch<ChartStats>().statsList[i].name){
-              portfolioList.add(PortfolioCryptoModel.fromJson(map));
+            for (int k = 0; k < context
+                .read<ChartStats>()
+                .statsList
+                .length; k++) {
+              if (PortfolioCryptoModel
+                  .fromJson(map)
+                  .symbol ==
+                  context
+                      .read<ChartStats>()
+                      .statsList[k].name) {
+                portfolioList.add(PortfolioCryptoModel.fromJson(map));
+              }
             }
           }
 
         }
+
+
+
         if(mounted){
           setState(() {
             portfolioList;
           });
         }
       }
+
       return portfolioList;
     } else {
       throw Exception('Failed to load coins');
@@ -76,20 +88,20 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
         const Duration(seconds: 60), (timer) => fetchCoinPortfolio());
     _tooltipBehavior = TooltipBehavior(enable: true);
     WidgetsBinding.instance?.addPostFrameCallback((_) {
-      _chartData = getChartData();
+      getChartData();
     });
   }
 
   List<CryptoData> getChartData() {
-    List<CryptoData> chartData = [];
+    late List<CryptoData> chartData = [];
     for (int i = 0; i < context.read<ChartStats>().statsList.length; i++) {
-      if (context.watch<ChartStats>().statsList[i].name.isNotEmpty) {
-        chartData.add(CryptoData(context.watch<ChartStats>().statsList[i].name,
-            context.watch<ChartStats>().statsList[i].quantity));
+      if (context.read<ChartStats>().statsList[i].name.isNotEmpty) {
+        chartData.add(CryptoData(context.read<ChartStats>().statsList[i].name,
+            context.read<ChartStats>().statsList[i].quantity));
 
-        debugPrint("DEBUG " + context.watch<ChartStats>().statsList[i].name);
+        debugPrint("DEBUG " + context.read<ChartStats>().statsList[i].name);
         debugPrint("DEBUG " +
-            context.watch<ChartStats>().statsList[i].quantity.toString());
+            context.read<ChartStats>().statsList[i].quantity.toString());
       }
     }
     return chartData;
@@ -107,7 +119,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
 
    */
 
-  late List<CryptoData> _chartData;
+
   late TooltipBehavior _tooltipBehavior;
 
   @override
@@ -151,7 +163,8 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                         builder: (context) => const AddCryptoToChart()));
               },
             ),
-            ListView.builder(
+
+           ListView.builder (
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               itemCount: context.read<ChartStats>().statsList.length,

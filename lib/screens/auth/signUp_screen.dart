@@ -1,5 +1,6 @@
 import 'package:crypto_tracker/services/auth_services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class SignUp extends StatefulWidget {
@@ -48,7 +49,7 @@ class _SignUpState extends State<SignUp> {
         leading: IconButton(
           alignment: Alignment.centerLeft,
           icon: Icon(Icons.arrow_back_ios),
-          onPressed: () {},
+          onPressed: () => SystemChannels.platform.invokeMethod('SystemNavigator.pop'),
         ),
 
       ),

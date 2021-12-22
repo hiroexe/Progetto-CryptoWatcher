@@ -215,12 +215,29 @@ class CoinScreenState extends State<CoinScreen> {
                   circulatingSupply: circulatingSupply,
                   favorite: favorite = true,
                 ));
+           /*     CoinScreen(    id: id,
+                  symbol: symbol,
+                  name: name,
+                  image: image,
+                  currentPrice: currentPrice,
+                  priceChange_24h: priceChange_24h,
+                  priceChangePercentage_24h: priceChangePercentage_24h,
+                  totalVolume: totalVolume,
+                  marketCap: marketCap,
+                  marketCapRank: marketCapRank,
+                  circulatingSupply: circulatingSupply,
+                  favorite: favorite = true); */
+                print(favorite);
               },
+
               child: const Icon(Icons.star_border),
+
+
             )
           else
             GestureDetector(
               onTap: () {
+
                 watchListNotifier.removeFormWatchList(CoinScreen(
                     id: id,
                     symbol: symbol,
@@ -233,9 +250,11 @@ class CoinScreenState extends State<CoinScreen> {
                     marketCap: marketCap,
                     marketCapRank: marketCapRank,
                     circulatingSupply: circulatingSupply,
-                    favorite: false));
+                    favorite: favorite = false));
+                print(favorite);
               },
               child: const Icon(Icons.star),
+
             ),
         ],
       ),

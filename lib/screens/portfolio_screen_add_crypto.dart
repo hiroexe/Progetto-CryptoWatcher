@@ -53,7 +53,7 @@ class _AddCryptoToChartState extends State<AddCryptoToChart> {
 
   @override
   Widget build(BuildContext context) {
-    ChartStats statsNotifier = Provider.of<ChartStats>(context, listen: false);
+    //ChartStats statsNotifier = Provider.of<ChartStats>(context);
 
     return Scaffold(
       appBar: AppBar(
