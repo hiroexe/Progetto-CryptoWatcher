@@ -38,7 +38,7 @@ num EarnPercentace (num earn , num ) {
 class _PortfolioScreenState extends State<PortfolioScreen> {
   Future<List<PortfolioCryptoModel>> fetchCoinPortfolio() async {
     portfolioList = [];
-    pList = [];
+    helpList = [];
     final response = await https.get(Uri.parse(
         'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false'));
     if (response.statusCode == 200) {
@@ -49,21 +49,17 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
           if (values[i] != null) {
 
             Map<String, dynamic> map = values[i];
-            pList.add(PortfolioCryptoModel.fromJson(map));
-            if (pList[i].symbol == context.watch<ChartStats>().statsList[i].name) {
-              portfolioList.add(pList[i]);
+
+            if(values[i] == context.watch<ChartStats>().statsList[i].name){
+              portfolioList.add(PortfolioCryptoModel.fromJson(map));
             }
-
           }
+
         }
-        if (mounted) {
-
-                setState(() {
-                  portfolioList;
-                });
-
-
-
+        if(mounted){
+          setState(() {
+            portfolioList;
+          });
         }
       }
       return portfolioList;

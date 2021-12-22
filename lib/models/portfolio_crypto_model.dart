@@ -26,4 +26,5 @@ PortfolioCryptoModel.fromJson(Map<String, dynamic> json){
   }
 }
 List<PortfolioCryptoModel> portfolioList = [];
-List<PortfolioCryptoModel> pList = [];
+List<PortfolioCryptoModel> helpList = [];
+

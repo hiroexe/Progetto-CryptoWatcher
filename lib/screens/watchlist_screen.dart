@@ -40,6 +40,7 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
               watchListNotifier.watchList[index].marketCapRank.toDouble(),
           circulatingSupply:
               watchListNotifier.watchList[index].circulatingSupply.toDouble(),
+           favorite: watchListNotifier.watchList[index].favorite,
         );
       },
     ));

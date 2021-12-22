@@ -33,7 +33,8 @@ class CoinScreen extends StatefulWidget {
       required this.totalVolume,
       required this.marketCap,
       required this.marketCapRank,
-      required this.circulatingSupply});
+      required this.circulatingSupply,
+      favorite});
 
   @override
   CoinScreenState createState() => CoinScreenState(
@@ -47,7 +48,8 @@ class CoinScreen extends StatefulWidget {
       totalVolume,
       marketCap,
       marketCapRank,
-      circulatingSupply);
+      circulatingSupply,
+      favorite);
 }
 
 class CoinScreenState extends State<CoinScreen> {
@@ -62,6 +64,7 @@ class CoinScreenState extends State<CoinScreen> {
   final double marketCap;
   final double marketCapRank;
   final double circulatingSupply;
+  bool favorite = false;
 
   CoinScreenState(
       this.id,
@@ -74,7 +77,8 @@ class CoinScreenState extends State<CoinScreen> {
       this.totalVolume,
       this.marketCap,
       this.marketCapRank,
-      this.circulatingSupply);
+      this.circulatingSupply,
+      this.favorite);
 
   late TrackballBehavior trackballBehavior;
   var f = NumberFormat.compact();
@@ -187,18 +191,17 @@ class CoinScreenState extends State<CoinScreen> {
       appBar: AppBar(
         title:
             Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-               const Text(
+          const Text(
             '|  ',
           ),
-              Text(symbol.toUpperCase()),
-              const Text('/USD')
+          Text(symbol.toUpperCase()),
+          const Text('/USD')
         ]),
         actions: <Widget>[
-          /*
-          IconButton(
-            icon: const Icon(Icons.star_border),
-            onPressed: () {
-              watchListNotifier.addToWatchList(CoinScreen(
+          if (favorite == false)
+            GestureDetector(
+              onTap: () {
+                watchListNotifier.addToWatchList(CoinScreen(
                   id: id,
                   symbol: symbol,
                   name: name,
@@ -209,33 +212,31 @@ class CoinScreenState extends State<CoinScreen> {
                   totalVolume: totalVolume,
                   marketCap: marketCap,
                   marketCapRank: marketCapRank,
-                  circulatingSupply: circulatingSupply));
-            },
-          ),
-          */
-          if (watchListNotifier.watchList.contains(context) == false)
+                  circulatingSupply: circulatingSupply,
+                  favorite: favorite = true,
+                ));
+              },
+              child: const Icon(Icons.star_border),
+            )
+          else
             GestureDetector(
-                onTap: () {
-              watchListNotifier.addToWatchList(CoinScreen(id: id,
-                  symbol: symbol,
-                  name: name,
-                  image: image,
-                  currentPrice: currentPrice,
-                  priceChange_24h: priceChange_24h,
-                  priceChangePercentage_24h: priceChangePercentage_24h,
-                  totalVolume: totalVolume,
-                  marketCap: marketCap,
-                  marketCapRank: marketCapRank,
-                  circulatingSupply: circulatingSupply));
-                },
-                child: const Icon(Icons.star_border),
-          ) else GestureDetector(
-            onTap: () {
-              watchListNotifier.removeFormWatchList(0);
-
-            },
-            child: const Icon(Icons.star),
-          ),
+              onTap: () {
+                watchListNotifier.removeFormWatchList(CoinScreen(
+                    id: id,
+                    symbol: symbol,
+                    name: name,
+                    image: image,
+                    currentPrice: currentPrice,
+                    priceChange_24h: priceChange_24h,
+                    priceChangePercentage_24h: priceChangePercentage_24h,
+                    totalVolume: totalVolume,
+                    marketCap: marketCap,
+                    marketCapRank: marketCapRank,
+                    circulatingSupply: circulatingSupply,
+                    favorite: false));
+              },
+              child: const Icon(Icons.star),
+            ),
         ],
       ),
       body: ListView(
