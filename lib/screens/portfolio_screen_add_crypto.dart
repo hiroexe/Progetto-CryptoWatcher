@@ -1,4 +1,5 @@
 import 'package:crypto_tracker/provider/portfolio_provider.dart';
+import 'package:crypto_tracker/screens/portfolio_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -140,7 +141,11 @@ class _AddCryptoToChartState extends State<AddCryptoToChart> {
           context
               .read<ChartStats>()
               .addStats(Stats(_inputSymbol, _inputPrice, _inputQuantity));
-          Navigator.pop(context);
+
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const PortfolioScreen()));
 
         },
       ),

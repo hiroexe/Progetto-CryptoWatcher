@@ -5,6 +5,7 @@ import 'package:crypto_tracker/models/card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
 
+
 class CryptoScreen extends StatefulWidget {
   const CryptoScreen({
     Key? key,
@@ -27,7 +28,7 @@ class _CryptoScreenState extends State<CryptoScreen> {
           if (values[i] != null) {
             Map<String, dynamic> map = values[i];
             coinList.add(CryptoModel.fromJson(map));
-            //print(values[i]);
+
           }
         }
         if (mounted) {

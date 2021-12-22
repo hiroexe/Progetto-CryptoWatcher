@@ -11,7 +11,7 @@ class PortfolioCryptoModel {
 
 
 PortfolioCryptoModel.fromJson(Map<String, dynamic> json){
-  symbol = json['symbol'];
+  symbol = json['symbol'] ?? "no symbol";
   image = json['image'];
   currentPrice = json['current_price'];
 }
@@ -26,3 +26,4 @@ PortfolioCryptoModel.fromJson(Map<String, dynamic> json){
   }
 }
 List<PortfolioCryptoModel> portfolioList = [];
+List<PortfolioCryptoModel> pList = [];
