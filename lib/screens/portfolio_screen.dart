@@ -47,7 +47,9 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
         for (int i = 0; i < values.length; i++) {
           if (values[i] != null) {
             Map<String, dynamic> map = values[i];
-            portfolioList.add(PortfolioCryptoModel.fromJson(map));
+            if(values[i] == context.watch<ChartStats>().statsList[i].name){
+              portfolioList.add(PortfolioCryptoModel.fromJson(map));
+            }
           }
         }
         if(mounted){

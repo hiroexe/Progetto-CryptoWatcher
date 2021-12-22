@@ -15,6 +15,7 @@ class CoinCard extends StatelessWidget {
     required this.marketCap,
     required this.marketCapRank,
     required this.circulatingSupply,
+    bool favorite = false
   });
 
   late final String id;
@@ -28,6 +29,7 @@ class CoinCard extends StatelessWidget {
   late final num marketCap;
   late final num marketCapRank;
   late final num circulatingSupply;
+  bool favorite = false;
 
   @override
   Widget build(BuildContext context) {

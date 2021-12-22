@@ -20,13 +20,15 @@ class WatchListProvider with ChangeNotifier {
       }
     }
     if (a == true) {
+      crypto.favorite = true;
       watchList.add(crypto);
       notifyListeners();
     }
   }
 
-  removeFormWatchList (index){
-    _watchList.removeWhere((_) => _.id == _watchList[index].id);
+  removeFormWatchList (CoinScreen crypto){
+    crypto.favorite = false;
+    watchList.remove(crypto);
 
   }
 }

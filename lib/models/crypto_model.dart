@@ -61,6 +61,7 @@ class CryptoModel {
 List<CryptoModel> coinList = [];
 
 
+
 /*
 
 
