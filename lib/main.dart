@@ -82,7 +82,7 @@ class ErrorWidget extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Column(
-          children: [
+          children: const [
             Icon(Icons.error),
             Text("Something went wrong")
           ],
@@ -100,7 +100,7 @@ class Loading extends StatelessWidget {
         theme: ThemeData.dark(),
         home: Scaffold(
           body: ListView(
-            children: [
+            children: const [
               SizedBox(height: 150),
               Center(
                 child: SizedBox(

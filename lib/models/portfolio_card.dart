@@ -65,13 +65,18 @@ class PortfolioCard extends StatelessWidget{
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            currentPrice.toDouble().toStringAsFixed(4),
-                        style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                            currentPrice.toDouble().toDouble() < 0
+                                ? currentPrice.toDouble().toStringAsFixed(2)
+                                : '+' +
+                                currentPrice.toDouble().toStringAsFixed(2),
+                            style: TextStyle(
+                              color: currentPrice.toDouble().toDouble() < 0
+                                  ? Colors.red
+                                  : Colors.green,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                           FloatingActionButton.small(
                             heroTag: "btnPortfolio",
                             onPressed: (){

@@ -37,7 +37,7 @@ class _SignInState extends State<SignIn> {
       appBar: AppBar(
         backgroundColor: Colors.grey[800],
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'CRYPTOWATCHER',
           textAlign: TextAlign.center,
           style: TextStyle(
@@ -48,7 +48,7 @@ class _SignInState extends State<SignIn> {
         ),
         leading: IconButton(
               alignment: Alignment.centerLeft,
-              icon: Icon(Icons.arrow_back_ios),
+              icon: const Icon(Icons.arrow_back_ios),
               onPressed: () => SystemChannels.platform.invokeMethod('SystemNavigator.pop'),
             ),
 
@@ -63,8 +63,8 @@ class _SignInState extends State<SignIn> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 30),
-                  Text(
+                  const SizedBox(height: 30),
+                  const Text(
                     'Welcome Back',
                     style: TextStyle(
                       fontSize: 22,
@@ -72,7 +72,7 @@ class _SignInState extends State<SignIn> {
                       color: Colors.amber,
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
                     'Sign in to continue',
                     style: TextStyle(
@@ -80,14 +80,14 @@ class _SignInState extends State<SignIn> {
                       color: Colors.grey[500],
                     ),
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   TextFormField(
                     controller: _emailController,
                     validator: (val) => val!.isNotEmpty
                         ? null
                         : "Please enter an email address",
                     decoration: InputDecoration(
-                      focusedBorder: UnderlineInputBorder(
+                      focusedBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.amber, width: 2.0),
                       ),
                       hintText: "Email",
@@ -97,14 +97,14 @@ class _SignInState extends State<SignIn> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   TextFormField(
                     controller: _passwordController,
                     validator: (val) => val!.length < 6
                         ? "Enter more than 6 char"
                         : null,
                     decoration: InputDecoration(
-                      focusedBorder: UnderlineInputBorder(
+                      focusedBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.amber, width: 2.0),
                       ),
                       hintText: "Password",
@@ -114,7 +114,7 @@ class _SignInState extends State<SignIn> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 50),
+                  const SizedBox(height: 50),
                   MaterialButton(
                     onPressed: () async {
                       if (_formkey.currentState!.validate()) {

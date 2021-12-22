@@ -33,7 +33,7 @@ class HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: Colors.grey[800],
         centerTitle: true,
-        title: Text(
+        title: const Text(
             'CRYPTOWATCHER',
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -46,7 +46,7 @@ class HomeScreenState extends State<HomeScreen> {
         leading:
           IconButton(
               onPressed: () async => await signInProvider.logOut(),
-              icon: Icon(
+              icon: const Icon(
                 Icons.exit_to_app_rounded
 
               ),

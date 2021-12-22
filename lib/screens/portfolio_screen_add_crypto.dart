@@ -15,42 +15,6 @@ class _AddCryptoToChartState extends State<AddCryptoToChart> {
   num _inputPrice = -1;
   num _inputQuantity = -1;
 
-  /*
-  Future<List<PortfolioCryptoModel>> fetchCoinPortfolio() async {
-    portfolioList = [];
-    final response = await https.get(Uri.parse(
-        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false'));
-    if (response.statusCode == 200) {
-      List<dynamic> values = [];
-      values = json.decode(response.body);
-      if (values.isNotEmpty) {
-        for (int i = 0; i < values.length; i++) {
-          if (values[i] != null) {
-            Map<String, dynamic> map = values[i];
-            portfolioList.add(PortfolioCryptoModel.fromJson(map));
-          }
-        }if(mounted){
-          setState(() {
-            portfolioList;
-          });
-        }
-      }
-      return portfolioList;
-    } else {
-      throw Exception('Failed to load coins');
-    }
-  }
-  @override
-  void initState() {
-    fetchCoinPortfolio();
-    if(mounted) {
-      Timer.periodic(const Duration(seconds: 60), (timer) => fetchCoinPortfolio());
-      super.initState();
-    }
-  }
-
-   */
-
   @override
   Widget build(BuildContext context) {
     //ChartStats statsNotifier = Provider.of<ChartStats>(context);

@@ -25,6 +25,7 @@ class ChartStats with ChangeNotifier{
       for (int i = 0; i < statsList.length; i++) {
         if (statsList[i].name == stats.name) {
           statsList[i].quantity += stats.quantity;
+          statsList[i].price = (statsList[i].price + stats.price)/2;
           a = false;
           notifyListeners();
         }

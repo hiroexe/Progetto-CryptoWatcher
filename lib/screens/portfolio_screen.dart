@@ -25,20 +25,13 @@ class CryptoData {
 }
 
 num earn(num buyPrice, num currentPrice, num quantity) {
-  num earn = (currentPrice - buyPrice) * quantity;
+  num earn = (currentPrice * quantity) - (buyPrice* quantity);
   return earn;
 }
-/*
-num EarnPercentace (num earn , num ) {
-  num earnPercentace =
-}
-
- */
 
 class _PortfolioScreenState extends State<PortfolioScreen> {
   Future<List<PortfolioCryptoModel>> fetchCoinPortfolio() async {
     portfolioList = [];
-    helpList = [];
     final response = await https.get(Uri.parse(
         'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false'));
     if (response.statusCode == 200) {
@@ -107,19 +100,6 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
     return chartData;
   }
 
-  /*
-  @override
-  void initState() {
-    super.initState();
-    _tooltipBehavior = TooltipBehavior(enable: true);
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
-      _chartData = getChartData();
-    });
-  }
-
-   */
-
-
   late TooltipBehavior _tooltipBehavior;
 
   @override
@@ -163,7 +143,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                         builder: (context) => const AddCryptoToChart()));
               },
             ),
-
+          if(portfolioList.isNotEmpty)
            ListView.builder (
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
