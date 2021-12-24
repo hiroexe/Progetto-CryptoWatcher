@@ -3,6 +3,8 @@ import 'package:crypto_tracker/screens/portfolio_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
+import 'home_screen.dart';
+
 class AddCryptoToChart extends StatefulWidget {
   const AddCryptoToChart({Key? key}) : super(key: key);
 
@@ -106,10 +108,8 @@ class _AddCryptoToChartState extends State<AddCryptoToChart> {
               .read<ChartStats>()
               .addStats(Stats(_inputSymbol, _inputPrice, _inputQuantity));
 
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const PortfolioScreen()));
+          Navigator.pop(context, const PortfolioScreen());
+
 
         },
       ),

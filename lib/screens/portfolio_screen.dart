@@ -41,25 +41,23 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
         for (int i = 0; i < values.length; i++) {
           if (values[i] != null) {
             Map<String, dynamic> map = values[i];
-            for (int k = 0; k < context
+            if(mounted) {
+              for (int k = 0; k < context
                 .read<ChartStats>()
                 .statsList
                 .length; k++) {
-              if (PortfolioCryptoModel
-                  .fromJson(map)
-                  .symbol ==
-                  context
-                      .read<ChartStats>()
-                      .statsList[k].name) {
-                portfolioList.add(PortfolioCryptoModel.fromJson(map));
+                if (PortfolioCryptoModel
+                    .fromJson(map)
+                    .symbol ==
+                    context
+                        .read<ChartStats>()
+                        .statsList[k].name) {
+                  portfolioList.add(PortfolioCryptoModel.fromJson(map));
+                }
               }
             }
           }
-
         }
-
-
-
         if(mounted){
           setState(() {
             portfolioList;
@@ -91,10 +89,6 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
       if (context.read<ChartStats>().statsList[i].name.isNotEmpty) {
         chartData.add(CryptoData(context.read<ChartStats>().statsList[i].name,
             context.read<ChartStats>().statsList[i].quantity));
-
-        debugPrint("DEBUG " + context.read<ChartStats>().statsList[i].name);
-        debugPrint("DEBUG " +
-            context.read<ChartStats>().statsList[i].quantity.toString());
       }
     }
     return chartData;
@@ -131,17 +125,20 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                 ),
               ),
             ),
-            FloatingActionButton.extended(
-              heroTag: const Text("AddBtn"),
-              backgroundColor: Colors.amber,
-              label: const Text("ADD"),
-              icon: const Icon(Icons.add),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const AddCryptoToChart()));
-              },
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: FloatingActionButton.extended(
+                heroTag: const Text("AddBtn"),
+                backgroundColor: Colors.amber,
+                label: const Text("ADD"),
+                icon: const Icon(Icons.add),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AddCryptoToChart()));
+                },
+              ),
             ),
           if(portfolioList.isNotEmpty)
            ListView.builder (
