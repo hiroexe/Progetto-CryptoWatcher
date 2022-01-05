@@ -7,6 +7,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:crypto_tracker/provider/watchlist_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as https;
+import 'package:crypto_tracker/services/watchlist_preferences_services.dart';
 
 class CoinScreen extends StatefulWidget {
   late final String id;
@@ -24,17 +25,17 @@ class CoinScreen extends StatefulWidget {
 
   CoinScreen(
       {required this.id,
-      required this.symbol,
-      required this.name,
-      required this.image,
-      required this.currentPrice,
-      required this.priceChange_24h,
-      required this.priceChangePercentage_24h,
-      required this.totalVolume,
-      required this.marketCap,
-      required this.marketCapRank,
-      required this.circulatingSupply,
-      favorite});
+        required this.symbol,
+        required this.name,
+        required this.image,
+        required this.currentPrice,
+        required this.priceChange_24h,
+        required this.priceChangePercentage_24h,
+        required this.totalVolume,
+        required this.marketCap,
+        required this.marketCapRank,
+        required this.circulatingSupply,
+        favorite});
 
   @override
   CoinScreenState createState() => CoinScreenState(
@@ -64,7 +65,7 @@ class CoinScreenState extends State<CoinScreen> {
   final double marketCap;
   final double marketCapRank;
   final double circulatingSupply;
-  bool favorite = false;
+  bool favorite;
 
   CoinScreenState(
       this.id,
@@ -82,6 +83,7 @@ class CoinScreenState extends State<CoinScreen> {
 
   late TrackballBehavior trackballBehavior;
   var f = NumberFormat.compact();
+  List<String> initList = [];
 
   Future<List<ChartSampleData>> getChartData1() async {
     data1 = [];
@@ -172,9 +174,18 @@ class CoinScreenState extends State<CoinScreen> {
     getChartData30();
     getChartData365();
   }
+  void addOrRemove(bool favorite) {
+    if (favorite == false) {
+      WatchlistPreferences().addCryptoToDb(id);
+    } else {
+      WatchlistPreferences().removeCryptoToDb(id);
+    }
+  }
 
   @override
   void initState() {
+    initList = WatchlistPreferences().getWatchlist() ?? [];
+    favorite = initList.contains(id);
     getChartDataAll();
     trackballBehavior = TrackballBehavior(
         enable: true, activationMode: ActivationMode.longPress);
@@ -184,13 +195,14 @@ class CoinScreenState extends State<CoinScreen> {
 
   @override
   Widget build(BuildContext context) {
-    WatchListProvider watchListNotifier =
-        Provider.of<WatchListProvider>(context);
-
+    /*  WatchListProvider watchListNotifier =
+        Provider.of<WatchListProvider>(context); */
+    initList = WatchlistPreferences().getWatchlist() ?? [];
+    favorite = initList.contains(id);
     return Scaffold(
       appBar: AppBar(
         title:
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
+        Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
           const Text(
             '|  ',
           ),
@@ -198,50 +210,17 @@ class CoinScreenState extends State<CoinScreen> {
           const Text('/USD')
         ]),
         actions: <Widget>[
-          if (favorite == false)
-            GestureDetector(
-              onTap: () {
-                watchListNotifier.addToWatchList(CoinScreen(
-                  id: id,
-                  symbol: symbol,
-                  name: name,
-                  image: image,
-                  currentPrice: currentPrice,
-                  priceChange_24h: priceChange_24h,
-                  priceChangePercentage_24h: priceChangePercentage_24h,
-                  totalVolume: totalVolume,
-                  marketCap: marketCap,
-                  marketCapRank: marketCapRank,
-                  circulatingSupply: circulatingSupply,
-                  favorite: favorite = true,
-                ));
-              },
-
-              child: const Icon(Icons.star_border),
+          IconButton(
+              icon: Icon(
+                  favorite ? Icons.star : Icons.star_border),
+              onPressed: () {
+                addOrRemove(favorite);
+                setState(() {
+                  favorite = !favorite;
+                });
 
 
-            )
-          else
-            GestureDetector(
-              onTap: () {
-
-                watchListNotifier.removeFormWatchList(CoinScreen(
-                    id: id,
-                    symbol: symbol,
-                    name: name,
-                    image: image,
-                    currentPrice: currentPrice,
-                    priceChange_24h: priceChange_24h,
-                    priceChangePercentage_24h: priceChangePercentage_24h,
-                    totalVolume: totalVolume,
-                    marketCap: marketCap,
-                    marketCapRank: marketCapRank,
-                    circulatingSupply: circulatingSupply,
-                    favorite: favorite = false));
-              },
-              child: const Icon(Icons.star),
-
-            ),
+              }),
         ],
       ),
       body: ListView(
@@ -310,7 +289,7 @@ class CoinScreenState extends State<CoinScreen> {
                         priceChange_24h.toDouble() < 0
                             ? priceChange_24h.toDouble().toStringAsFixed(2)
                             : '+' +
-                                priceChange_24h.toDouble().toStringAsFixed(2),
+                            priceChange_24h.toDouble().toStringAsFixed(2),
                         style: TextStyle(
                           color: priceChange_24h.toDouble() < 0
                               ? Colors.red
@@ -322,14 +301,14 @@ class CoinScreenState extends State<CoinScreen> {
                       Text(
                         priceChangePercentage_24h.toDouble() < 0
                             ? priceChangePercentage_24h
-                                    .toDouble()
-                                    .toStringAsFixed(2) +
-                                '%'
+                            .toDouble()
+                            .toStringAsFixed(2) +
+                            '%'
                             : '+' +
-                                priceChangePercentage_24h
-                                    .toDouble()
-                                    .toStringAsFixed(2) +
-                                '%',
+                            priceChangePercentage_24h
+                                .toDouble()
+                                .toStringAsFixed(2) +
+                            '%',
                         style: TextStyle(
                           color: priceChangePercentage_24h.toDouble() < 0
                               ? Colors.red
@@ -360,13 +339,13 @@ class CoinScreenState extends State<CoinScreen> {
                             dataSource: data1,
                             xValueMapper: (ChartSampleData sales, _) => sales.x,
                             lowValueMapper: (ChartSampleData sales, _) =>
-                                sales.low,
+                            sales.low,
                             highValueMapper: (ChartSampleData sales, _) =>
-                                sales.high,
+                            sales.high,
                             openValueMapper: (ChartSampleData sales, _) =>
-                                sales.open,
+                            sales.open,
                             closeValueMapper: (ChartSampleData sales, _) =>
-                                sales.close),
+                            sales.close),
                       ],
                       primaryXAxis: DateTimeAxis(
                         interval: 3,
@@ -380,7 +359,7 @@ class CoinScreenState extends State<CoinScreen> {
                           maximum: currentPrice + (currentPrice / 100 * 30),
                           interval: currentPrice / 13,
                           numberFormat:
-                              NumberFormat.simpleCurrency(decimalDigits: 2)),
+                          NumberFormat.simpleCurrency(decimalDigits: 2)),
                     ),
                     SfCartesianChart(
                       trackballBehavior: trackballBehavior,
@@ -390,13 +369,13 @@ class CoinScreenState extends State<CoinScreen> {
                             dataSource: data30,
                             xValueMapper: (ChartSampleData sales, _) => sales.x,
                             lowValueMapper: (ChartSampleData sales, _) =>
-                                sales.low,
+                            sales.low,
                             highValueMapper: (ChartSampleData sales, _) =>
-                                sales.high,
+                            sales.high,
                             openValueMapper: (ChartSampleData sales, _) =>
-                                sales.open,
+                            sales.open,
                             closeValueMapper: (ChartSampleData sales, _) =>
-                                sales.close),
+                            sales.close),
                       ],
                       primaryXAxis: DateTimeAxis(
                         interval: 3,
@@ -409,7 +388,7 @@ class CoinScreenState extends State<CoinScreen> {
                           minimum: currentPrice - (currentPrice / 100 * 80),
                           interval: currentPrice / 6,
                           numberFormat:
-                              NumberFormat.simpleCurrency(decimalDigits: 2)),
+                          NumberFormat.simpleCurrency(decimalDigits: 2)),
                     ),
                     SfCartesianChart(
                       trackballBehavior: trackballBehavior,
@@ -419,13 +398,13 @@ class CoinScreenState extends State<CoinScreen> {
                             dataSource: data365,
                             xValueMapper: (ChartSampleData sales, _) => sales.x,
                             lowValueMapper: (ChartSampleData sales, _) =>
-                                sales.low,
+                            sales.low,
                             highValueMapper: (ChartSampleData sales, _) =>
-                                sales.high,
+                            sales.high,
                             openValueMapper: (ChartSampleData sales, _) =>
-                                sales.open,
+                            sales.open,
                             closeValueMapper: (ChartSampleData sales, _) =>
-                                sales.close),
+                            sales.close),
                       ],
                       primaryXAxis: DateTimeAxis(
                         interval: 1,
@@ -437,7 +416,7 @@ class CoinScreenState extends State<CoinScreen> {
                           majorGridLines: const MajorGridLines(width: 1),
                           interval: (currentPrice / 6),
                           numberFormat:
-                              NumberFormat.simpleCurrency(decimalDigits: 2)),
+                          NumberFormat.simpleCurrency(decimalDigits: 2)),
                     ),
                   ],
                 ),

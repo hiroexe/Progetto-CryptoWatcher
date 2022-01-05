@@ -7,6 +7,8 @@ import 'package:crypto_tracker/provider/watchlist_provider.dart';
 import 'package:crypto_tracker/screens/portfolio_screen_add_crypto.dart';
 import 'package:crypto_tracker/screens/wrapper.dart';
 import 'package:crypto_tracker/services/auth_services.dart';
+import 'package:crypto_tracker/services/portfolio_preferences_services.dart';
+import 'package:crypto_tracker/services/watchlist_preferences_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:crypto_tracker/provider/portfolio_provider.dart';
@@ -17,15 +19,20 @@ import 'package:provider/provider.dart';
 
 
 
-void main() => runApp(MultiProvider(
-  providers: [
-    ChangeNotifierProvider(create: (_) => ChartStats()),
-    ChangeNotifierProvider(create: (_) => WatchListProvider()),
-  ],
-  child: const MyApp(),
-)
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await WatchlistPreferences.init();
+  await PortfolioPreferences.init();
+  runApp( /*MultiProvider(
+   // providers: [
+    //  ChangeNotifierProvider(create: (_) => ChartStats()),
+     // ChangeNotifierProvider(create: (_) => WatchListProvider()),
+  //  ],
+    child:*/ const MyApp(),
 
-);
+    // ),
+  );
+}
 /*
 ChangeNotifierProvider(
 create: (_) => ChartStats(),
@@ -52,12 +59,12 @@ class MyApp extends StatelessWidget {
                 ChangeNotifierProvider<AuthServices>.value
                   (value: AuthServices()),
                 StreamProvider<User?>.value(
-                  value: AuthServices().user,
-                  initialData: null),
+                    value: AuthServices().user,
+                    initialData: null),
 
               ],
               child: MaterialApp(
-               initialRoute: '/',
+                initialRoute: '/',
                 routes: {
                   '/screens/portfolio_screen': (context) => const PortfolioScreen(),
                   '/screens/portfolio_screen_add_crypto': (context) =>
@@ -97,37 +104,37 @@ class Loading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData.dark(),
-        home: Scaffold(
-          body: ListView(
-            children: const [
-              SizedBox(height: 150),
-              Center(
-                child: SizedBox(
-                  height: 30,
-                  child: Text(
-                    'CRYPTOWATCHER',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+      theme: ThemeData.dark(),
+      home: Scaffold(
+        body: ListView(
+          children: const [
+            SizedBox(height: 150),
+            Center(
+              child: SizedBox(
+                height: 30,
+                child: Text(
+                  'CRYPTOWATCHER',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              SizedBox(height: 20),
-              SizedBox(
-                child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
-                height: 20,
-                width: 20,
-              ),
-            ],
+            ),
+            SizedBox(height: 20),
+            SizedBox(
+              child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
+              height: 20,
+              width: 20,
+            ),
+          ],
 
 
         ),
-        ),
+      ),
     );
 
   }

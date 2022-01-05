@@ -7,13 +7,11 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({
     Key? key,
   }) : super(key: key);
-
   @override
   HomeScreenState createState() => HomeScreenState();
 }
 
 class HomeScreenState extends State<HomeScreen> {
-
   int _selectedIndex = 0;
   void _onItemTapped(int index) {
     setState(() {
@@ -28,29 +26,29 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-  final signInProvider = Provider.of<AuthServices>(context);
+    final signInProvider = Provider.of<AuthServices>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey[800],
         centerTitle: true,
         title: const Text(
-            'CRYPTOWATCHER',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+          'CRYPTOWATCHER',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
           ),
+        ),
 
         leading:
-          IconButton(
-              onPressed: () async => await signInProvider.logOut(),
-              icon: const Icon(
-                Icons.exit_to_app_rounded
+        IconButton(
+          onPressed: () async => await signInProvider.logOut(),
+          icon: const Icon(
+              Icons.exit_to_app_rounded
 
-              ),
           ),
+        ),
 
       ),
       body: _screenList[_selectedIndex],
@@ -73,7 +71,7 @@ class HomeScreenState extends State<HomeScreen> {
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
-     ),
+      ),
     );
   }
 }

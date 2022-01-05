@@ -2,7 +2,7 @@ import 'package:crypto_tracker/provider/portfolio_provider.dart';
 import 'package:crypto_tracker/screens/portfolio_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-
+import 'package:crypto_tracker/services/portfolio_preferences_services.dart';
 import 'home_screen.dart';
 
 class AddCryptoToChart extends StatefulWidget {
@@ -14,8 +14,8 @@ class AddCryptoToChart extends StatefulWidget {
 
 class _AddCryptoToChartState extends State<AddCryptoToChart> {
   String _inputSymbol = "First try";
-  num _inputPrice = -1;
-  num _inputQuantity = -1;
+  double _inputPrice = -1;
+  double _inputQuantity = -1;
 
   @override
   Widget build(BuildContext context) {
@@ -104,10 +104,12 @@ class _AddCryptoToChartState extends State<AddCryptoToChart> {
         label: const Text("ADD"),
         icon: const Icon(Icons.add),
         onPressed: () {
-          context
+          /*   context
               .read<ChartStats>()
               .addStats(Stats(_inputSymbol, _inputPrice, _inputQuantity));
 
+        */
+          PortfolioPreferences().addPortfolioToDb(_inputSymbol, _inputPrice, _inputQuantity);
           Navigator.pop(context, const PortfolioScreen());
 
 
@@ -116,3 +118,4 @@ class _AddCryptoToChartState extends State<AddCryptoToChart> {
     );
   }
 }
+

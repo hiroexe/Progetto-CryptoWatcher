@@ -15,7 +15,6 @@ class CoinCard extends StatelessWidget {
     required this.marketCap,
     required this.marketCapRank,
     required this.circulatingSupply,
-    bool favorite = false
   });
 
   late final String id;
@@ -29,7 +28,7 @@ class CoinCard extends StatelessWidget {
   late final num marketCap;
   late final num marketCapRank;
   late final num circulatingSupply;
-  bool favorite = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +100,7 @@ class CoinCard extends StatelessWidget {
                           priceChange_24h.toDouble() < 0
                               ? priceChange_24h.toDouble().toStringAsFixed(2)
                               : '+' +
-                                  priceChange_24h.toDouble().toStringAsFixed(2),
+                              priceChange_24h.toDouble().toStringAsFixed(2),
                           style: TextStyle(
                             color: priceChange_24h.toDouble() < 0
                                 ? Colors.red
@@ -113,14 +112,14 @@ class CoinCard extends StatelessWidget {
                         Text(
                           priceChangePercentage_24h.toDouble() < 0
                               ? priceChangePercentage_24h
-                                      .toDouble()
-                                      .toStringAsFixed(2) +
-                                  '%'
+                              .toDouble()
+                              .toStringAsFixed(2) +
+                              '%'
                               : '+' +
-                                  priceChangePercentage_24h
-                                      .toDouble()
-                                      .toStringAsFixed(2) +
-                                  '%',
+                              priceChangePercentage_24h
+                                  .toDouble()
+                                  .toStringAsFixed(2) +
+                              '%',
                           style: TextStyle(
                             color: priceChangePercentage_24h.toDouble() < 0
                                 ? Colors.red
@@ -141,19 +140,19 @@ class CoinCard extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) => CoinScreen(
-                          id: id,
-                          symbol: symbol,
-                          name: name,
-                          image: image,
-                          currentPrice: currentPrice.toDouble(),
-                          priceChange_24h: priceChange_24h.toDouble(),
-                          priceChangePercentage_24h:
-                              priceChangePercentage_24h.toDouble(),
-                          totalVolume: totalVolume.toDouble(),
-                          marketCap: marketCap.toDouble(),
-                          marketCapRank: marketCapRank.toDouble(),
-                          circulatingSupply: circulatingSupply.toDouble(),
-                        )));
+                      id: id,
+                      symbol: symbol,
+                      name: name,
+                      image: image,
+                      currentPrice: currentPrice.toDouble(),
+                      priceChange_24h: priceChange_24h.toDouble(),
+                      priceChangePercentage_24h:
+                      priceChangePercentage_24h.toDouble(),
+                      totalVolume: totalVolume.toDouble(),
+                      marketCap: marketCap.toDouble(),
+                      marketCapRank: marketCapRank.toDouble(),
+                      circulatingSupply: circulatingSupply.toDouble(),
+                    )));
           },
           style: ElevatedButton.styleFrom(
             primary: Colors.grey[800],

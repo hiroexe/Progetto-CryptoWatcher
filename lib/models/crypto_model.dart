@@ -59,7 +59,7 @@ class CryptoModel {
   }
 }
 List<CryptoModel> coinList = [];
-
+List<CryptoModel> coinList2 = [];
 
 
 /*

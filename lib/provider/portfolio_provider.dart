@@ -1,7 +1,7 @@
 
 
 import 'package:flutter/material.dart';
-
+/*
 class Stats{
 
  String name = "DEBUG";
@@ -18,7 +18,7 @@ class ChartStats with ChangeNotifier{
   List <Stats> get statsList => _statsList;
 
 
-
+/*
   addStats (Stats stats) {
     bool a = true;
     if (statsList.isNotEmpty) {
@@ -46,7 +46,27 @@ class ChartStats with ChangeNotifier{
     statsList.clear();
   }
 
+ */
+
 
 
 }
+
+
+ */
+class CryptoData {
+  CryptoData(this.name,
+      this.price,
+      this.quantity);
+
+  String name;
+  num price;
+  num quantity;
+
+
+
+}
+List<CryptoData> chartData = [];
+
+
 
