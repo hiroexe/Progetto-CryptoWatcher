@@ -1,3 +1,4 @@
+import 'package:crypto_tracker/screens/portfolio_screen.dart';
 import "package:shared_preferences/shared_preferences.dart";
 
 class PortfolioPreferences {
@@ -14,7 +15,8 @@ class PortfolioPreferences {
     portfolio = getPortfolio() ?? [];
 
     int tmpIndex;
-    if (portfolio.contains(symbol)) {
+    //if (PortfolioScreen(). ) {
+      if (portfolio.contains(symbol)) {
       tmpIndex = portfolio.indexOf(symbol);
       double tmpPrice = double.parse(portfolio[tmpIndex + 1]);
       double tmpQnty = double.parse(portfolio[tmpIndex + 2]);;
@@ -25,6 +27,7 @@ class PortfolioPreferences {
       portfolio.add(buyPrice.toString());
       portfolio.add(quantity.toString());
 
+    //}
     }
 
     await _preferences2.setStringList(_keyPortfolio, portfolio);

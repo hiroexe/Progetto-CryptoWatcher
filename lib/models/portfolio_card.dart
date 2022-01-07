@@ -48,13 +48,13 @@ class PortfolioCard extends StatelessWidget{
                     ),
                   ),
                 ),
-                Expanded(
+                SizedBox(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       FittedBox(
-                        fit: BoxFit.scaleDown,
+                      fit: BoxFit.scaleDown,
                         child: Text(
                           symbol.toUpperCase(),
                           style: const TextStyle(
@@ -66,7 +66,9 @@ class PortfolioCard extends StatelessWidget{
                       ),
                     ],),
                 ),
-                FittedBox(
+                Expanded(
+
+
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
@@ -75,7 +77,7 @@ class PortfolioCard extends StatelessWidget{
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: const [
                             Text(
-                              'Buy Price:',
+                              'Buy Price:    ',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 15,

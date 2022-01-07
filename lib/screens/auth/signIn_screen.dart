@@ -156,7 +156,7 @@ class _SignInState extends State<SignIn> {
                       TextButton(
                           onPressed: () => widget.toggleScreen(),
                           child: Text(
-                            "Sign Up",
+                            "Register",
                             style: TextStyle(
                               color: Colors.amber,
                             ),

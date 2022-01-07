@@ -4,7 +4,6 @@ import 'package:crypto_tracker/models/chart_sample_data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:crypto_tracker/provider/watchlist_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as https;
 import 'package:crypto_tracker/services/watchlist_preferences_services.dart';
@@ -424,7 +423,7 @@ class CoinScreenState extends State<CoinScreen> {
             ),
           ),
           Container(
-            height: 150,
+            height: 250,
             color: Colors.grey[900],
             child: Center(
               child: FittedBox(

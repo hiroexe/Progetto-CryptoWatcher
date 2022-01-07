@@ -3,7 +3,7 @@ https://github.com/hiroexe/Progetto-CryptoWatcher.git
  */
 
 
-import 'package:crypto_tracker/provider/watchlist_provider.dart';
+
 import 'package:crypto_tracker/screens/portfolio_screen_add_crypto.dart';
 import 'package:crypto_tracker/screens/wrapper.dart';
 import 'package:crypto_tracker/services/auth_services.dart';

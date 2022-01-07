@@ -137,7 +137,7 @@ class _SignUpState extends State<SignUp> {
                         valueColor: AlwaysStoppedAnimation<Color>(
                             Colors.amber))
                         : Text(
-                      "Sign Up",
+                      "Create an Account",
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,

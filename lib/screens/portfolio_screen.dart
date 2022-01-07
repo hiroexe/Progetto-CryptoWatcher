@@ -31,6 +31,7 @@ class PortfolioScreen extends StatefulWidget {
 class _PortfolioScreenState extends State<PortfolioScreen> {
 
   List<String> portfolioListStats = PortfolioPreferences().getPortfolio() ?? [];
+ // List tmpList = [];
 
   List<CryptoData>? getChartData() {
     chartData = [];
@@ -45,6 +46,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
     return chartData;
   }
   Future<List<PortfolioCryptoModel>> fetchCoinPortfolio() async {
+
     portfolioList = [];
     portfolioListStats = PortfolioPreferences().getPortfolio() ?? [];
     final response = await https.get(Uri.parse(
@@ -56,28 +58,34 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
         for (int i = 0; i < values.length; i++) {
           if (values[i] != null) {
             Map<String, dynamic> map = values[i];
+            print(map.values.elementAt(1));
+           // tmpList.add(map.values.elementAt(1));
+      /*    for (int j = 0; j < map.values.length;) {
+            if (portfolioListStats[j] == map.values.elementAt(1)) {}
+          } */
+
+
               if (portfolioListStats.contains(map.values.elementAt(1))) {
                 portfolioList.add(PortfolioCryptoModel.fromJson(map));
 
 
             }
-              /*  for (int k = 0; k < context
-                .read<ChartStats>()
-                .statsList
-                .length; k++) {
-                if (PortfolioCryptoModel
-                    .fromJson(map)
-                    .symbol ==
-                    context
-                        .read<ChartStats>()
-                        .statsList[k].name && !portfolioList.contains(PortfolioCryptoModel.fromJson(map))) {
-                  portfolioList.add(PortfolioCryptoModel.fromJson(map));
-                }
-              } */
+
+
 
 
           }
         }
+   /*    for (int j = 0; j < portfolioListStats.length;) {
+          if (!tmpList.contains(portfolioListStats[j])) {
+            PortfolioPreferences().removePortfolioToDb(portfolioListStats[j]);
+          }
+          j += 3;
+        }
+
+    */
+
+
         if(mounted){
           setState(() {
             portfolioList;
@@ -121,7 +129,6 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
     return Center(
 
       child: Scaffold(
-
         body: ListView(
           scrollDirection: Axis.vertical,
           children: [
@@ -173,6 +180,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
             if(portfolioList.isNotEmpty)
               ListView.builder (
                scrollDirection: Axis.vertical,
+                physics: ScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: portfolioList.length,
                 itemBuilder: (context, index) {
