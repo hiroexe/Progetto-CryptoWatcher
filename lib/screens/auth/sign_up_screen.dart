@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-class SignIn extends StatefulWidget {
+class SignUp extends StatefulWidget {
   final Function toggleScreen;
 
-  const SignIn({Key? key, required this.toggleScreen}) : super(key: key);
+  const SignUp({Key? key, required this.toggleScreen}) : super(key: key);
   @override
-  _SignInState createState() => _SignInState();
+  _SignUpState createState() => _SignUpState();
 }
 
-class _SignInState extends State<SignIn> {
+class _SignUpState extends State<SignUp> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
   final _formkey = GlobalKey<FormState>();
@@ -47,13 +47,12 @@ class _SignInState extends State<SignIn> {
           ),
         ),
         leading: IconButton(
-              alignment: Alignment.centerLeft,
-              icon: const Icon(Icons.arrow_back_ios),
-              onPressed: () => SystemChannels.platform.invokeMethod('SystemNavigator.pop'),
-            ),
-
+          alignment: Alignment.centerLeft,
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () => SystemChannels.platform.invokeMethod('SystemNavigator.pop'),
         ),
 
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -65,7 +64,7 @@ class _SignInState extends State<SignIn> {
                 children: [
                   const SizedBox(height: 30),
                   const Text(
-                    'Welcome Back',
+                    'Welcome',
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
@@ -74,7 +73,7 @@ class _SignInState extends State<SignIn> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'Sign in to continue',
+                    'Create a new account to continue',
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey[500],
@@ -118,67 +117,70 @@ class _SignInState extends State<SignIn> {
                   MaterialButton(
                     onPressed: () async {
                       if (_formkey.currentState!.validate()) {
-                        print("Email: ${_emailController.text}");
-                        print("Email: ${_passwordController.text}");
-                        await signInProvider.signIn(_emailController.text.trim(),
-                                        _passwordController.text.trim());
+                        //print("Email: ${_emailController.text}");
+                        //print("Email: ${_passwordController.text}");
+                        await signInProvider.signUp(_emailController.text.trim(),
+                            _passwordController.text.trim());
                       }
                     },
                     height: 60,
-                    minWidth: signInProvider.isLoading
-                      ? null
-                      : double.infinity,
+                    minWidth: signInProvider.isLoading 
+                        ? null 
+                        : double.infinity,
                     color: Theme.of(context).primaryColor,
                     textColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: signInProvider.isLoading
-                      ? CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white))
-                      : Text(
-                      "Sign In",
+                    child: signInProvider.isLoading 
+                        ? const CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                            Colors.amber))
+                        : const Text(
+                      "Create an Account",
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Don't have an account?",
+                      Text("Already have an account?",
                         style: TextStyle(
                           color: Colors.grey[500],
                         ),),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       TextButton(
-                          onPressed: () => widget.toggleScreen(),
-                          child: Text(
-                            "Register",
-                            style: TextStyle(
-                              color: Colors.amber,
-                            ),
+                        onPressed: () => widget.toggleScreen(),
+                        child: const Text(
+                          "Sign In",
+                          style: TextStyle(
+                            color: Colors.amber,
                           ),
+                        ),
                       ),
                     ],
                   ),
+                  const SizedBox(height: 20),
                   if(signInProvider.errorMessage != null)
                     Container(
                       color: Colors.amberAccent,
                       child: ListTile(
                           title: Text(signInProvider.errorMessage!,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.black,
                             ),),
-                          leading: Icon(Icons.error),
+                          leading: const Icon(Icons.error),
                           trailing: IconButton(
-                            icon: Icon(Icons.close),
+                            icon: const Icon(Icons.close),
                             onPressed: () => signInProvider.setMessage(null),
                           )
                       ),
                     )
+
                 ],
               ),
             ),

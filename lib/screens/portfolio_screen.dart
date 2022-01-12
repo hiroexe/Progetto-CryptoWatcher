@@ -1,16 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:crypto_tracker/models/portfolio_card.dart';
 import 'package:crypto_tracker/models/portfolio_crypto_model.dart';
+import 'package:crypto_tracker/models/add_crypto_model.dart';
 import 'package:crypto_tracker/screens/portfolio_screen_add_crypto.dart';
 import 'package:crypto_tracker/services/portfolio_preferences_services.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:crypto_tracker/provider/portfolio_provider.dart';
 import 'package:http/http.dart' as https;
-import 'package:collection/collection.dart';
 
 class PortfolioScreen extends StatefulWidget {
   const PortfolioScreen({Key? key}) : super(key: key);
@@ -20,11 +17,7 @@ class PortfolioScreen extends StatefulWidget {
 
 
 
-
 }
-
-
-
 
 
 
@@ -42,7 +35,6 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
       //chartData.add(CryptoData("btc", 1000, 1));
 
       i += 3;}
-    print(chartData);
     return chartData;
   }
   Future<List<PortfolioCryptoModel>> fetchCoinPortfolio() async {
@@ -58,7 +50,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
         for (int i = 0; i < values.length; i++) {
           if (values[i] != null) {
             Map<String, dynamic> map = values[i];
-            print(map.values.elementAt(1));
+
            // tmpList.add(map.values.elementAt(1));
       /*    for (int j = 0; j < map.values.length;) {
             if (portfolioListStats[j] == map.values.elementAt(1)) {}
@@ -105,12 +97,11 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
     fetchCoinPortfolio();
     super.initState();
     Timer.periodic(
-        const Duration(seconds: 15), (timer) => fetchCoinPortfolio());
+        const Duration(seconds: 8), (timer) => fetchCoinPortfolio());
     _tooltipBehavior = TooltipBehavior(enable: true);
    WidgetsBinding.instance?.addPostFrameCallback((_) {
-      PortfolioScreen();
+      const PortfolioScreen();
       getChartData();
-    //  print(chartData[0].name);
 
     });
   }
@@ -129,13 +120,34 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
     return Center(
 
       child: Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+        floatingActionButton: Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              FloatingActionButton.extended(
+
+                heroTag: "Btn1",
+                backgroundColor: Colors.amber,
+                label: const Text("ADD"),
+                icon: const Icon(Icons.add),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AddCryptoToChart()));
+                },
+              ),
+            ],
+          ),
+        ),
         body: ListView(
           scrollDirection: Axis.vertical,
           children: [
             if(portfolioList.isNotEmpty)
             Center(
-              child: /*Consumer<CryptoData>(
-                builder: (_, notifier, __) => */
+              child:
                  SfCircularChart(
                   title: ChartTitle(text: 'Crypto portfolio \n (in USD)'),
                   legend: Legend(
@@ -160,27 +172,10 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
               ),
             ),
 
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: FloatingActionButton.extended(
-                  heroTag: const Text("AddBtn"),
-                  backgroundColor: Colors.amber,
-                  label: const Text("ADD"),
-                  icon: const Icon(Icons.add),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const AddCryptoToChart()));
-                  },
-                ),
-              ),
-            ),
             if(portfolioList.isNotEmpty)
               ListView.builder (
                scrollDirection: Axis.vertical,
-                physics: ScrollPhysics(),
+                physics: const ScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: portfolioList.length,
                 itemBuilder: (context, index) {

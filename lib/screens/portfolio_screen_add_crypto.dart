@@ -1,9 +1,6 @@
-import 'package:crypto_tracker/provider/portfolio_provider.dart';
-import 'package:crypto_tracker/screens/portfolio_screen.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:crypto_tracker/screens/portfolio_screen.dart';
 import 'package:crypto_tracker/services/portfolio_preferences_services.dart';
-import 'home_screen.dart';
 
 class AddCryptoToChart extends StatefulWidget {
   const AddCryptoToChart({Key? key}) : super(key: key);
@@ -19,7 +16,6 @@ class _AddCryptoToChartState extends State<AddCryptoToChart> {
 
   @override
   Widget build(BuildContext context) {
-    //ChartStats statsNotifier = Provider.of<ChartStats>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -92,6 +88,7 @@ class _AddCryptoToChartState extends State<AddCryptoToChart> {
               ),
               onChanged: (valueQ) {
                 _inputQuantity = double.parse(valueQ);
+
               },
             ),
           ),
@@ -104,11 +101,6 @@ class _AddCryptoToChartState extends State<AddCryptoToChart> {
         label: const Text("ADD"),
         icon: const Icon(Icons.add),
         onPressed: () {
-          /*   context
-              .read<ChartStats>()
-              .addStats(Stats(_inputSymbol, _inputPrice, _inputQuantity));
-
-        */
           PortfolioPreferences().addPortfolioToDb(_inputSymbol, _inputPrice, _inputQuantity);
           Navigator.pop(context, const PortfolioScreen());
 

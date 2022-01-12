@@ -17,7 +17,7 @@ class ChartSampleData {
 
 
   ChartSampleData.fromJson(List<dynamic> json) {
-    x = new DateTime.fromMillisecondsSinceEpoch(json[0]);
+    x = DateTime.fromMillisecondsSinceEpoch(json[0]);
     open = json[1];
     close = json[2];
     low = json[3];

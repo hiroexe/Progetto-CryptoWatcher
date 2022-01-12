@@ -2,17 +2,14 @@
 https://github.com/hiroexe/Progetto-CryptoWatcher.git
  */
 
-
-
-import 'package:crypto_tracker/screens/portfolio_screen_add_crypto.dart';
 import 'package:crypto_tracker/screens/wrapper.dart';
+import 'package:crypto_tracker/screens/portfolio_screen.dart';
+import 'package:crypto_tracker/screens/portfolio_screen_add_crypto.dart';
 import 'package:crypto_tracker/services/auth_services.dart';
 import 'package:crypto_tracker/services/portfolio_preferences_services.dart';
 import 'package:crypto_tracker/services/watchlist_preferences_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:crypto_tracker/provider/portfolio_provider.dart';
-import 'package:crypto_tracker/screens/portfolio_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,24 +20,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await WatchlistPreferences.init();
   await PortfolioPreferences.init();
-  runApp( /*MultiProvider(
-   // providers: [
-    //  ChangeNotifierProvider(create: (_) => ChartStats()),
-     // ChangeNotifierProvider(create: (_) => WatchListProvider()),
-  //  ],
-    child:*/ const MyApp(),
+  runApp( const MyApp(),
 
-    // ),
   );
 }
-/*
-ChangeNotifierProvider(
-create: (_) => ChartStats(),
-child: const MyApp(),
-)
 
-
- */
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -72,7 +56,7 @@ class MyApp extends StatelessWidget {
                 },
                 theme: ThemeData.dark(),
                 debugShowCheckedModeBanner: false,
-                home: Wrapper(),
+                home: const Wrapper(),
               ),
             );
           } else {

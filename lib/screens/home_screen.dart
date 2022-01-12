@@ -1,4 +1,6 @@
-import 'package:crypto_tracker/screens/screens.dart';
+import 'package:crypto_tracker/screens/crypto_screen.dart';
+import 'package:crypto_tracker/screens/watchlist_screen.dart';
+import 'package:crypto_tracker/screens/portfolio_screen.dart';
 import 'package:crypto_tracker/services/auth_services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

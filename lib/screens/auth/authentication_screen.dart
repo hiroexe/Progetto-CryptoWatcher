@@ -1,5 +1,5 @@
-import 'package:crypto_tracker/screens/auth/signIn_screen.dart';
-import 'package:crypto_tracker/screens/auth/signUp_screen.dart';
+import 'package:crypto_tracker/screens/auth/sign_in_screen.dart';
+import 'package:crypto_tracker/screens/auth/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 
 class Authentication extends StatefulWidget {

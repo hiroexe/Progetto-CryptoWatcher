@@ -5,9 +5,7 @@ import 'package:crypto_tracker/models/card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
 import 'package:crypto_tracker/services/watchlist_preferences_services.dart';
-/*
 
-import 'package:provider/provider.dart'; */
 
 
 class WatchlistScreen extends StatefulWidget {
@@ -20,9 +18,6 @@ class WatchlistScreen extends StatefulWidget {
 class _WatchlistScreenState extends State<WatchlistScreen> {
 
   List<String> watchlistId = [];
-  /*  WatchListProvider watchListNotifier =
-        Provider.of<WatchListProvider>(context, listen: false); */
-
 
   Future<List<CryptoModel>> fetchCoin() async {
     coinList2 = [];

@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:crypto_tracker/models/chart_sample_data_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as https;
@@ -194,8 +193,6 @@ class CoinScreenState extends State<CoinScreen> {
 
   @override
   Widget build(BuildContext context) {
-    /*  WatchListProvider watchListNotifier =
-        Provider.of<WatchListProvider>(context); */
     initList = WatchlistPreferences().getWatchlist() ?? [];
     favorite = initList.contains(id);
     return Scaffold(
@@ -467,6 +464,8 @@ class CoinScreenState extends State<CoinScreen> {
                             ),
                           ),
                           Text(' '),
+                          Text(' '),
+                          Text(' '),
                         ],
                       ),
                       Column(
@@ -506,6 +505,8 @@ class CoinScreenState extends State<CoinScreen> {
                               fontWeight: FontWeight.normal,
                             ),
                           ),
+                          const Text(' '),
+                          const Text(' '),
                           const Text(' '),
                         ],
                       ),

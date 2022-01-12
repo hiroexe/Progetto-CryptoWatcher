@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-class SignUp extends StatefulWidget {
+class SignIn extends StatefulWidget {
   final Function toggleScreen;
 
-  const SignUp({Key? key, required this.toggleScreen}) : super(key: key);
+  const SignIn({Key? key, required this.toggleScreen}) : super(key: key);
   @override
-  _SignUpState createState() => _SignUpState();
+  _SignInState createState() => _SignInState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _SignInState extends State<SignIn> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
   final _formkey = GlobalKey<FormState>();
@@ -37,7 +37,7 @@ class _SignUpState extends State<SignUp> {
       appBar: AppBar(
         backgroundColor: Colors.grey[800],
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'CRYPTOWATCHER',
           textAlign: TextAlign.center,
           style: TextStyle(
@@ -47,12 +47,13 @@ class _SignUpState extends State<SignUp> {
           ),
         ),
         leading: IconButton(
-          alignment: Alignment.centerLeft,
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () => SystemChannels.platform.invokeMethod('SystemNavigator.pop'),
+              alignment: Alignment.centerLeft,
+              icon: const Icon(Icons.arrow_back_ios),
+              onPressed: () => SystemChannels.platform.invokeMethod('SystemNavigator.pop'),
+            ),
+
         ),
 
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -62,31 +63,31 @@ class _SignUpState extends State<SignUp> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 30),
-                  Text(
-                    'Welcome',
+                  const SizedBox(height: 30),
+                  const Text(
+                    'Welcome Back',
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: Colors.amber,
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
-                    'Create a new account to continue',
+                    'Sign in to continue',
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey[500],
                     ),
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   TextFormField(
                     controller: _emailController,
                     validator: (val) => val!.isNotEmpty
                         ? null
                         : "Please enter an email address",
                     decoration: InputDecoration(
-                      focusedBorder: UnderlineInputBorder(
+                      focusedBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.amber, width: 2.0),
                       ),
                       hintText: "Email",
@@ -96,14 +97,14 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   TextFormField(
                     controller: _passwordController,
                     validator: (val) => val!.length < 6
                         ? "Enter more than 6 char"
                         : null,
                     decoration: InputDecoration(
-                      focusedBorder: UnderlineInputBorder(
+                      focusedBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.amber, width: 2.0),
                       ),
                       hintText: "Password",
@@ -113,74 +114,71 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 50),
+                  const SizedBox(height: 50),
                   MaterialButton(
                     onPressed: () async {
                       if (_formkey.currentState!.validate()) {
-                        print("Email: ${_emailController.text}");
-                        print("Email: ${_passwordController.text}");
-                        await signInProvider.signUp(_emailController.text.trim(),
-                            _passwordController.text.trim());
+                        //print("Email: ${_emailController.text}");
+                        //print("Email: ${_passwordController.text}");
+                        await signInProvider.signIn(_emailController.text.trim(),
+                                        _passwordController.text.trim());
                       }
                     },
                     height: 60,
-                    minWidth: signInProvider.isLoading 
-                        ? null 
-                        : double.infinity,
+                    minWidth: signInProvider.isLoading
+                      ? null
+                      : double.infinity,
                     color: Theme.of(context).primaryColor,
                     textColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: signInProvider.isLoading 
-                        ? CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                            Colors.amber))
-                        : Text(
-                      "Create an Account",
+                    child: signInProvider.isLoading
+                      ? const CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white))
+                      : const Text(
+                      "Sign In",
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Already have an account?",
+                      Text("Don't have an account?",
                         style: TextStyle(
                           color: Colors.grey[500],
                         ),),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       TextButton(
-                        onPressed: () => widget.toggleScreen(),
-                        child: Text(
-                          "Sign In",
-                          style: TextStyle(
-                            color: Colors.amber,
+                          onPressed: () => widget.toggleScreen(),
+                          child: const Text(
+                            "Register",
+                            style: TextStyle(
+                              color: Colors.amber,
+                            ),
                           ),
-                        ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
                   if(signInProvider.errorMessage != null)
                     Container(
                       color: Colors.amberAccent,
                       child: ListTile(
                           title: Text(signInProvider.errorMessage!,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.black,
                             ),),
-                          leading: Icon(Icons.error),
+                          leading: const Icon(Icons.error),
                           trailing: IconButton(
-                            icon: Icon(Icons.close),
+                            icon: const Icon(Icons.close),
                             onPressed: () => signInProvider.setMessage(null),
                           )
                       ),
                     )
-
                 ],
               ),
             ),

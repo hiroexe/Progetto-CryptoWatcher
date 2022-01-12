@@ -1,6 +1,5 @@
 import 'package:crypto_tracker/screens/coin_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:crypto_tracker/screens/screens.dart';
 
 class CoinCard extends StatelessWidget {
   CoinCard({
