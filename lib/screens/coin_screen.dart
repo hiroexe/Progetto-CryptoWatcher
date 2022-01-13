@@ -213,6 +213,11 @@ class CoinScreenState extends State<CoinScreen> {
                 addOrRemove(favorite);
                 setState(() {
                   favorite = !favorite;
+                  /*if(mounted){
+                    WatchlistPreferences().watchlist;  <===============0
+                  }
+
+                   */
                 });
 
 
