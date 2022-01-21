@@ -101,7 +101,7 @@ class _AddCryptoToChartState extends State<AddCryptoToChart> {
         label: const Text("ADD"),
         icon: const Icon(Icons.add),
         onPressed: () {
-          PortfolioPreferences().addPortfolioToDb(_inputSymbol, _inputPrice, _inputQuantity);
+          PortfolioPreferences().addPortfolioToDb(_inputSymbol.toLowerCase(), _inputPrice, _inputQuantity);
           Navigator.pop(context, const PortfolioScreen());
 
 

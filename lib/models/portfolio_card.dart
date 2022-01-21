@@ -17,7 +17,18 @@ class PortfolioCard extends StatelessWidget{
   late final num buyPrice;
   late final num quantity;
 
-
+  String addSpaces(String toEdit) {
+    String tmp = "";
+    if (toEdit.length < 8) {
+      while (toEdit.length < 9) {
+        tmp = toEdit;
+        toEdit = " " + tmp;
+      }
+      return toEdit;
+    } else {
+      return toEdit;
+    }
+  }
 
   @override
   Widget build(BuildContext context){
@@ -65,103 +76,110 @@ class PortfolioCard extends StatelessWidget{
                       ),
                     ],),
                 ),
-                Expanded(
-                  child: Container(
-                    height: 100,
+                Container(
+                  margin: EdgeInsets.fromLTRB(8.0, 8.0, 20.0, 8.0),
+                  child: SizedBox(
+                      width: 180,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
 
-                    child: FittedBox(
-                        fit: BoxFit.fitWidth,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
-                                  Text(
-                                    'Buy Price:',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Quantity:',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Current Price: ',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Earn:',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
+                        child: Container(
+                          height: 70,
+                          child: FittedBox(
+                            fit: BoxFit.fill,
 
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
 
-                                  Text(
-                                    buyPrice.toString(),
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
+                            child: Row(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: const [
+                                    Text(
+                                      'Buy Price:',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    quantity.toString(),
-                                    style:  const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
+                                    Text(
+                                      'Quantity:',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    currentPrice.toStringAsFixed(2),
-                                    style:  const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
+                                    Text(
+                                      'Current Price: ',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    earn.toDouble().toDouble() < 0
-                                        ? earn.toDouble().toStringAsFixed(1)
-                                        : '+' +
-                                        earn.toDouble().toStringAsFixed(1),
-                                    style: TextStyle(
-                                      color: earn.toDouble().toDouble() < 0
-                                          ? Colors.red
-                                          : Colors.green,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
+                                    Text(
+                                      'Earn:',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
 
-                                ],
-                              ),
-                            ],
+                                  ],
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+
+                                    Text(
+                                      buyPrice.toString(),
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                    Text(
+                                      quantity.toString(),
+                                      style:  const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                    Text(
+
+                                      addSpaces(currentPrice.toStringAsFixed(2)),
+                                      style:  const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                    Text(
+                                      earn.toDouble().toDouble() < 0
+                                          ? earn.toDouble().toStringAsFixed(1)
+                                          : '+' +
+                                          earn.toDouble().toStringAsFixed(1),
+                                      style: TextStyle(
+                                        color: earn.toDouble().toDouble() < 0
+                                            ? Colors.red
+                                            : Colors.green,
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                  ),
+                    ),
                 ),
 
 
