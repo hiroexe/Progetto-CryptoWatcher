@@ -149,7 +149,9 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
             Center(
               child:
                  SfCircularChart(
-                  title: ChartTitle(text: 'Crypto portfolio \n (in USD)'),
+                  title: ChartTitle(text: '  Crypto portfolio (in USD)',
+                  alignment: ChartAlignment.near,
+                  ),
                   legend: Legend(
                       isVisible: true,
                       overflowMode: LegendItemOverflowMode.wrap),
@@ -162,7 +164,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                           data.name.toUpperCase(),
                       yValueMapper: (CryptoData data, _) =>
                       (data.quantity  * (portfolioList.firstWhere((element) =>
-                      element.symbol == data.name).currentPrice)),
+                      element.symbol == data.name).currentPrice)).round(),
                       dataLabelSettings:
                       const DataLabelSettings(isVisible: true),
                       enableTooltip: true,
