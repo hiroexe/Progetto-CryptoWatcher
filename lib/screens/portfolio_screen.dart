@@ -97,7 +97,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
     fetchCoinPortfolio();
     super.initState();
     Timer.periodic(
-        const Duration(seconds: 8), (timer) => fetchCoinPortfolio());
+        const Duration(seconds: 9), (timer) => fetchCoinPortfolio());
     _tooltipBehavior = TooltipBehavior(enable: true);
    WidgetsBinding.instance?.addPostFrameCallback((_) {
       const PortfolioScreen();

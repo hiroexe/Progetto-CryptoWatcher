@@ -55,7 +55,7 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
     watchlistId = WatchlistPreferences().getWatchlist() ?? ["DEBUG", "-1", "-1"];
     fetchCoin();
     Timer timer =
-    Timer.periodic(const Duration(seconds: 60), (timer) => fetchCoin());
+    Timer.periodic(const Duration(seconds: 9), (timer) => fetchCoin());
     if (!mounted) {
       timer.cancel();
     } else {
