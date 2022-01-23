@@ -1,20 +1,16 @@
-
 class ChartSampleData {
-
-  ChartSampleData({
-    required this.x,
-    required this.open,
-    required this.close,
-    required this.low,
-    required this.high
-  });
+  ChartSampleData(
+      {required this.x,
+      required this.open,
+      required this.close,
+      required this.low,
+      required this.high});
 
   late final DateTime? x;
   late final double? open;
   late final double? close;
   late final double? low;
   late final double? high;
-
 
   ChartSampleData.fromJson(List<dynamic> json) {
     x = DateTime.fromMillisecondsSinceEpoch(json[0]);
@@ -28,4 +24,3 @@ class ChartSampleData {
 List<ChartSampleData> data1 = [];
 List<ChartSampleData> data30 = [];
 List<ChartSampleData> data365 = [];
-

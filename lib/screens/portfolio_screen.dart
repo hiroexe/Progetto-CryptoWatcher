@@ -14,31 +14,25 @@ class PortfolioScreen extends StatefulWidget {
 
   @override
   State<PortfolioScreen> createState() => _PortfolioScreenState();
-
-
-
 }
 
-
-
 class _PortfolioScreenState extends State<PortfolioScreen> {
-
   List<String> portfolioListStats = PortfolioPreferences().getPortfolio() ?? [];
- // List tmpList = [];
 
   List<CryptoData>? getChartData() {
     chartData = [];
     for (int i = 0; i < portfolioListStats.length;) {
-          chartData.add(CryptoData(portfolioListStats[i],
+      chartData.add(CryptoData(
+          portfolioListStats[i],
           double.parse(portfolioListStats[i + 1]),
           double.parse(portfolioListStats[i + 2])));
-      //chartData.add(CryptoData("btc", 1000, 1));
 
-      i += 3;}
+      i += 3;
+    }
     return chartData;
   }
-  Future<List<PortfolioCryptoModel>> fetchCoinPortfolio() async {
 
+  Future<List<PortfolioCryptoModel>> fetchCoinPortfolio() async {
     portfolioList = [];
     portfolioListStats = PortfolioPreferences().getPortfolio() ?? [];
     final response = await https.get(Uri.parse(
@@ -51,34 +45,13 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
           if (values[i] != null) {
             Map<String, dynamic> map = values[i];
 
-           // tmpList.add(map.values.elementAt(1));
-      /*    for (int j = 0; j < map.values.length;) {
-            if (portfolioListStats[j] == map.values.elementAt(1)) {}
-          } */
-
-
-              if (portfolioListStats.contains(map.values.elementAt(1))) {
-                portfolioList.add(PortfolioCryptoModel.fromJson(map));
-
-
+            if (portfolioListStats.contains(map.values.elementAt(1))) {
+              portfolioList.add(PortfolioCryptoModel.fromJson(map));
             }
-
-
-
-
           }
         }
-   /*    for (int j = 0; j < portfolioListStats.length;) {
-          if (!tmpList.contains(portfolioListStats[j])) {
-            PortfolioPreferences().removePortfolioToDb(portfolioListStats[j]);
-          }
-          j += 3;
-        }
 
-    */
-
-
-        if(mounted){
+        if (mounted) {
           setState(() {
             portfolioList;
           });
@@ -88,25 +61,21 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
     } else {
       throw Exception('Failed to load coins');
     }
-
   }
 
   @override
   void initState() {
-    portfolioListStats = PortfolioPreferences().getPortfolio() ?? ["Debug", "0", "0"];
+    portfolioListStats =
+        PortfolioPreferences().getPortfolio() ?? ["Debug", "0", "0"];
     fetchCoinPortfolio();
     super.initState();
-    Timer.periodic(
-        const Duration(seconds: 9), (timer) => fetchCoinPortfolio());
+    Timer.periodic(const Duration(seconds: 9), (timer) => fetchCoinPortfolio());
     _tooltipBehavior = TooltipBehavior(enable: true);
-   WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
       const PortfolioScreen();
       getChartData();
-
     });
   }
-
-
 
   num earn(num buyPrice, num currentPrice, num quantity) {
     num earn = (currentPrice * quantity) - (buyPrice * quantity);
@@ -118,7 +87,6 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
   @override
   Widget build(BuildContext context) {
     return Center(
-
       child: Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
         floatingActionButton: Padding(
@@ -127,7 +95,6 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               FloatingActionButton.extended(
-
                 heroTag: "Btn1",
                 backgroundColor: Colors.amber,
                 label: const Text("ADD"),
@@ -145,58 +112,65 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
         body: ListView(
           scrollDirection: Axis.vertical,
           children: [
-            if(portfolioList.isNotEmpty)
-            Center(
-              child:
-                 SfCircularChart(
-                  title: ChartTitle(text: '  Crypto portfolio (in USD)',
-                  alignment: ChartAlignment.near,
+            if (portfolioList.isNotEmpty)
+              Center(
+                child: SfCircularChart(
+                  title: ChartTitle(
+                    text: '  Crypto portfolio (in USD)',
+                    alignment: ChartAlignment.near,
                   ),
                   legend: Legend(
                       isVisible: true,
                       overflowMode: LegendItemOverflowMode.wrap),
                   tooltipBehavior: _tooltipBehavior,
                   series: <CircularSeries>[
-
                     DoughnutSeries<CryptoData, String>(
                       dataSource: getChartData(),
                       xValueMapper: (CryptoData data, _) =>
                           data.name.toUpperCase(),
-                      yValueMapper: (CryptoData data, _) =>
-                      (data.quantity  * (portfolioList.firstWhere((element) =>
-                      element.symbol == data.name).currentPrice)).round(),
+                      yValueMapper: (CryptoData data, _) => (data.quantity *
+                              (portfolioList
+                                  .firstWhere(
+                                      (element) => element.symbol == data.name)
+                                  .currentPrice))
+                          .round(),
                       dataLabelSettings:
-                      const DataLabelSettings(isVisible: true),
+                          const DataLabelSettings(isVisible: true),
                       enableTooltip: true,
                     )
                   ],
-                //),
+                  //),
+                ),
               ),
-            ),
-
-            if(portfolioList.isNotEmpty)
-              ListView.builder (
-               scrollDirection: Axis.vertical,
+            if (portfolioList.isNotEmpty)
+              ListView.builder(
+                scrollDirection: Axis.vertical,
                 physics: const ScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: portfolioList.length,
                 itemBuilder: (context, index) {
                   return PortfolioCard(
-                      symbol: portfolioList[index].symbol,
-                      image: portfolioList[index].image,
-                      earn: earn(
-                        double.parse(portfolioListStats[portfolioListStats.
-                        indexOf(portfolioList[index].symbol) + 1]),
-                        portfolioList[index].currentPrice,
-                        double.parse(portfolioListStats[portfolioListStats.
-                        indexOf(portfolioList[index].symbol) + 2]),
-                      ),
-                      buyPrice: double.parse(portfolioListStats[portfolioListStats.
-                  indexOf(portfolioList[index].symbol) + 1]),
-                  quantity: double.parse(portfolioListStats[portfolioListStats.
-                  indexOf(portfolioList[index].symbol) + 2]),
-                    currentPrice: (portfolioList.firstWhere((element) =>
-                    element.symbol == portfolioList[index].symbol).currentPrice) ,
+                    symbol: portfolioList[index].symbol,
+                    image: portfolioList[index].image,
+                    earn: earn(
+                      double.parse(portfolioListStats[portfolioListStats
+                              .indexOf(portfolioList[index].symbol) +
+                          1]),
+                      portfolioList[index].currentPrice,
+                      double.parse(portfolioListStats[portfolioListStats
+                              .indexOf(portfolioList[index].symbol) +
+                          2]),
+                    ),
+                    buyPrice: double.parse(portfolioListStats[portfolioListStats
+                            .indexOf(portfolioList[index].symbol) +
+                        1]),
+                    quantity: double.parse(portfolioListStats[portfolioListStats
+                            .indexOf(portfolioList[index].symbol) +
+                        2]),
+                    currentPrice: (portfolioList
+                        .firstWhere((element) =>
+                            element.symbol == portfolioList[index].symbol)
+                        .currentPrice),
                   );
                 },
               ),
@@ -206,4 +180,3 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
     );
   }
 }
-

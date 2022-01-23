@@ -118,8 +118,6 @@ class _SignInState extends State<SignIn> {
                   MaterialButton(
                     onPressed: () async {
                       if (_formkey.currentState!.validate()) {
-                        //print("Email: ${_emailController.text}");
-                        //print("Email: ${_passwordController.text}");
                         await signInProvider.signIn(_emailController.text.trim(),
                                         _passwordController.text.trim());
                       }

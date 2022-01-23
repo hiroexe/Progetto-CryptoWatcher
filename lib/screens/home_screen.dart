@@ -9,17 +9,20 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({
     Key? key,
   }) : super(key: key);
+
   @override
   HomeScreenState createState() => HomeScreenState();
 }
 
 class HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
+
   static const List<Widget> _screenList = [
     CryptoScreen(),
     WatchlistScreen(),
@@ -42,16 +45,10 @@ class HomeScreenState extends State<HomeScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-
-        leading:
-        IconButton(
+        leading: IconButton(
           onPressed: () async => await signInProvider.logOut(),
-          icon: const Icon(
-              Icons.exit_to_app_rounded
-
-          ),
+          icon: const Icon(Icons.exit_to_app_rounded),
         ),
-
       ),
       body: _screenList[_selectedIndex],
       backgroundColor: Colors.grey,
@@ -63,7 +60,7 @@ class HomeScreenState extends State<HomeScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.star),
-            label : ('Watchlist'),
+            label: ('Watchlist'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.pie_chart),

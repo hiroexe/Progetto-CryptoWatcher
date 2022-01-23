@@ -48,12 +48,7 @@ class MyApp extends StatelessWidget {
 
               ],
               child: MaterialApp(
-                initialRoute: '/',
-                routes: {
-                  '/screens/portfolio_screen': (context) => const PortfolioScreen(),
-                  '/screens/portfolio_screen_add_crypto': (context) =>
-                  const AddCryptoToChart(),
-                },
+
                 theme: ThemeData.dark(),
                 debugShowCheckedModeBanner: false,
                 home: const Wrapper(),

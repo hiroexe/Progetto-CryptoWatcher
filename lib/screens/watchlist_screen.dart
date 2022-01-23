@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
 import 'package:crypto_tracker/services/watchlist_preferences_services.dart';
 
-
-
 class WatchlistScreen extends StatefulWidget {
   const WatchlistScreen({Key? key}) : super(key: key);
 
@@ -16,7 +14,6 @@ class WatchlistScreen extends StatefulWidget {
 }
 
 class _WatchlistScreenState extends State<WatchlistScreen> {
-
   List<String> watchlistId = [];
 
   Future<List<CryptoModel>> fetchCoin() async {
@@ -52,10 +49,11 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
 
   @override
   void initState() {
-    watchlistId = WatchlistPreferences().getWatchlist() ?? ["DEBUG", "-1", "-1"];
+    watchlistId =
+        WatchlistPreferences().getWatchlist() ?? ["DEBUG", "-1", "-1"];
     fetchCoin();
     Timer timer =
-    Timer.periodic(const Duration(seconds: 9), (timer) => fetchCoin());
+        Timer.periodic(const Duration(seconds: 9), (timer) => fetchCoin());
     if (!mounted) {
       timer.cancel();
     } else {
@@ -67,26 +65,24 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: ListView.builder(
-          scrollDirection: Axis.vertical,
-          itemCount: coinList2.length,
-          itemBuilder: (context, index) {
-            return CoinCard(
-              id: coinList2[index].id,
-              name: coinList2[index].name,
-              symbol: coinList2[index].symbol,
-              image: coinList2[index].image,
-              currentPrice: coinList2[index].currentPrice.toDouble(),
-              priceChange_24h: coinList2[index].priceChange_24h.toDouble(),
-              priceChangePercentage_24h:
+      scrollDirection: Axis.vertical,
+      itemCount: coinList2.length,
+      itemBuilder: (context, index) {
+        return CoinCard(
+          id: coinList2[index].id,
+          name: coinList2[index].name,
+          symbol: coinList2[index].symbol,
+          image: coinList2[index].image,
+          currentPrice: coinList2[index].currentPrice.toDouble(),
+          priceChange_24h: coinList2[index].priceChange_24h.toDouble(),
+          priceChangePercentage_24h:
               coinList2[index].priceChangePercentage_24h.toDouble(),
-              totalVolume: coinList2[index].totalVolume.toDouble(),
-              marketCap: coinList2[index].marketCap.toDouble(),
-              marketCapRank: coinList2[index].marketCapRank.toDouble(),
-              circulatingSupply: coinList2[index].circulatingSupply.toDouble(),
-
-            );
-          },
-        ));
+          totalVolume: coinList2[index].totalVolume.toDouble(),
+          marketCap: coinList2[index].marketCap.toDouble(),
+          marketCapRank: coinList2[index].marketCapRank.toDouble(),
+          circulatingSupply: coinList2[index].circulatingSupply.toDouble(),
+        );
+      },
+    ));
   }
 }
-

@@ -1,20 +1,21 @@
 import "package:shared_preferences/shared_preferences.dart";
 
 class PortfolioPreferences {
-
   late List<String> portfolio;
-  static SharedPreferences _preferences2 = SharedPreferences.getInstance() as SharedPreferences;
-  static Future init() async => _preferences2 = await SharedPreferences.getInstance();
+  static SharedPreferences _preferences2 =
+      SharedPreferences.getInstance() as SharedPreferences;
+
+  static Future init() async =>
+      _preferences2 = await SharedPreferences.getInstance();
 
   static const _keyPortfolio = 'portfolio';
 
-
-
-  Future addPortfolioToDb(String symbol, double buyPrice, double quantity) async {
+  Future addPortfolioToDb(
+      String symbol, double buyPrice, double quantity) async {
     portfolio = getPortfolio() ?? [];
 
     int tmpIndex;
-      if (portfolio.contains(symbol)) {
+    if (portfolio.contains(symbol)) {
       tmpIndex = portfolio.indexOf(symbol);
       double tmpPrice = double.parse(portfolio[tmpIndex + 1]);
       double tmpQnty = double.parse(portfolio[tmpIndex + 2]);
@@ -24,12 +25,10 @@ class PortfolioPreferences {
       portfolio.add(symbol);
       portfolio.add(buyPrice.toString());
       portfolio.add(quantity.toString());
-
     }
 
     await _preferences2.setStringList(_keyPortfolio, portfolio);
   }
-
 
   Future removePortfolioToDb(String symbol) async {
     portfolio = getPortfolio() ?? [];
@@ -40,12 +39,9 @@ class PortfolioPreferences {
       portfolio.removeAt(tmp);
     }
     await _preferences2.setStringList(_keyPortfolio, portfolio);
-
   }
-
 
   List<String>? getPortfolio() {
-    return  _preferences2.getStringList(_keyPortfolio);
+    return _preferences2.getStringList(_keyPortfolio);
   }
-
 }

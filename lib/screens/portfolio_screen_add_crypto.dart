@@ -16,7 +16,6 @@ class _AddCryptoToChartState extends State<AddCryptoToChart> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("Add your crypto"),
@@ -88,7 +87,6 @@ class _AddCryptoToChartState extends State<AddCryptoToChart> {
               ),
               onChanged: (valueQ) {
                 _inputQuantity = double.parse(valueQ);
-
               },
             ),
           ),
@@ -101,13 +99,11 @@ class _AddCryptoToChartState extends State<AddCryptoToChart> {
         label: const Text("ADD"),
         icon: const Icon(Icons.add),
         onPressed: () {
-          PortfolioPreferences().addPortfolioToDb(_inputSymbol.toLowerCase(), _inputPrice, _inputQuantity);
+          PortfolioPreferences().addPortfolioToDb(
+              _inputSymbol.toLowerCase(), _inputPrice, _inputQuantity);
           Navigator.pop(context, const PortfolioScreen());
-
-
         },
       ),
     );
   }
 }
-

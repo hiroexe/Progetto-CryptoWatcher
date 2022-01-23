@@ -5,7 +5,6 @@ import 'package:crypto_tracker/models/card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
 
-
 class CryptoScreen extends StatefulWidget {
   const CryptoScreen({
     Key? key,
@@ -28,7 +27,6 @@ class _CryptoScreenState extends State<CryptoScreen> {
           if (values[i] != null) {
             Map<String, dynamic> map = values[i];
             coinList.add(CryptoModel.fromJson(map));
-
           }
         }
         if (mounted) {
@@ -59,9 +57,9 @@ class _CryptoScreenState extends State<CryptoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: ListView.builder(
-          scrollDirection: Axis.vertical,
-         itemCount: coinList.length,
-         itemBuilder: (context, index) {
+      scrollDirection: Axis.vertical,
+      itemCount: coinList.length,
+      itemBuilder: (context, index) {
         return CoinCard(
           id: coinList[index].id,
           name: coinList[index].name,
@@ -77,6 +75,6 @@ class _CryptoScreenState extends State<CryptoScreen> {
           circulatingSupply: coinList[index].circulatingSupply.toDouble(),
         );
       },
-        ));
+    ));
   }
 }
